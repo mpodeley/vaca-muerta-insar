@@ -1,0 +1,21 @@
+# Entorno conda/mamba para la demo Fase 1 (InSAR Sentinel-1).
+#
+#   mamba env create -f fase1/environment.yml
+#   mamba activate insar
+#
+# Stack geoespacial = conda-first (GDAL/ISCE/MintPy sufren vía pip). Si no tenés
+# mamba, instalá miniforge: https://github.com/conda-forge/miniforge
+name: insar
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  # --- núcleo InSAR ---
+  - mintpy          # series de tiempo SBAS, smallbaselineApp.py, prep_hyp3.py
+  - hyp3_sdk        # encolar interferogramas en la nube de ASF
+  - asf_search      # descubrir la pila Sentinel-1
+  - gdal            # save_gdal.py, manejo de GeoTIFF
+  # --- visual / export ---
+  - rasterio        # leer el GeoTIFF de velocidad + reproyectar bounds
+  - matplotlib      # colormap divergente + PNG estático
+  - folium          # mapa HTML autocontenido (overlay sobre satélite Esri)

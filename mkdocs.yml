@@ -1,0 +1,50 @@
+site_name: Subsidencia en Vaca Muerta con InSAR
+site_description: >-
+  Experimento: ¿se puede observar deformación del suelo (subsidencia/uplift) en
+  Vaca Muerta con datos satelitales Sentinel-1, y qué dicen los datos?
+site_url: https://mpodeley.github.io/vaca-muerta-insar/
+repo_url: https://github.com/mpodeley/vaca-muerta-insar
+repo_name: mpodeley/vaca-muerta-insar
+
+theme:
+  name: material
+  language: es
+  palette:
+    - scheme: default
+      primary: blue grey
+      accent: red
+      toggle:
+        icon: material/weather-night
+        name: Modo oscuro
+    - scheme: slate
+      primary: blue grey
+      accent: red
+      toggle:
+        icon: material/weather-sunny
+        name: Modo claro
+  features:
+    - navigation.sections
+    - navigation.top
+    - content.code.copy
+    - toc.follow
+
+nav:
+  - Inicio: index.md
+  - Método paso a paso: metodo.md
+  - Resultados: resultados.md
+  - Interpretación: interpretacion.md
+  - Próximos pasos: proximos-pasos.md
+  - Referencias: referencias.md
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - tables
+  - attr_list
+  - md_in_html
+
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: https://github.com/mpodeley/vaca-muerta-insar
