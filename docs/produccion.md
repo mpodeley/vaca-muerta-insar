@@ -59,22 +59,27 @@ bloque que **no produce nada pero se levanta +80 mm** es la **firma típica de i
 (descarte de agua de producción / mantenimiento de presión): la inyección sube la presión de poro y el
 suelo se infla. Al lado, la extracción intensa de Bandurria Sur hace lo contrario.
 
-!!! warning "Caveat"
-    El +80 mm de Bandurria Norte es **LOS ascendente**, no confirmado como vertical puro (la
-    descomposición no llega hasta ahí). Podría incluir algo de movimiento horizontal. Pero producción
-    cero + inflado sostenido + el vecino hundiéndose hacen de la **inyección** la lectura más plausible.
+!!! success "Confirmado: el uplift es vertical"
+    Ampliando la [descomposición](#descomposicion-vertical) para cubrir Bandurria, el movimiento de
+    Bandurria Norte resulta ser **uplift vertical real (+5.4 mm/año**, 2019–2020), no un artefacto
+    horizontal — y Bandurria Sur, hundimiento vertical (−5.7 mm/año). Además ambos bloques se mueven
+    **horizontalmente en sentidos opuestos** (Norte se expande, Sur se contrae): el patrón exacto de
+    inflado vs deflación. La inyección pasa de hipótesis a lectura bien respaldada.
 
 ## Descomposición vertical { #descomposicion-vertical }
 
-Combinando una órbita **ascendente** (track 18) con una **descendente** (track 112) sobre la zona de
-Añelo, se puede **separar** el movimiento en sus componentes **vertical** (hundimiento real) y
-**horizontal este-oeste** — algo que una sola línea de vista no permite.
+Combinando una órbita **ascendente** (track 18) con una **descendente** (track 112) sobre la región
+Añelo–Bandurria, se puede **separar** el movimiento en sus componentes **vertical** (hundimiento/uplift
+real) y **horizontal este-oeste** — algo que una sola línea de vista no permite.
 
-![Descomposición vertical y este-oeste](assets/descomposicion.png){ loading=lazy }
+Calculando el componente **vertical** por área, el resultado es nítido:
 
-El panel **vertical** es la subsidencia "limpia" (sin contaminación horizontal): confirma las cubetas
-de hundimiento localizadas, de hasta ~10 mm/año, sobre un fondo estable. El panel **horizontal** muestra
-un patrón distinto, lo que justifica haber hecho la separación.
+![Componente vertical por área](assets/descomposicion.png){ loading=lazy }
 
-> Esta descomposición cubre solo el solapamiento de ambas órbitas (zona de Añelo, 2019–2020). Extenderla
-> a toda el área requeriría una serie descendente más larga — un próximo paso.
+Todos los bloques productivos bajan verticalmente (Loma Campana −7.4, Bandurria Sur −5.7, La Amarga
+Chica −5.6 mm/año…), y **Bandurria Norte —sin producción— es el único que sube (+5.4 mm/año)**. Esto
+confirma que el uplift de Bandurria Norte es deformación vertical (inyección), no un efecto horizontal.
+
+> La descomposición cubre el solapamiento de ambas órbitas (región Añelo–Bandurria) y el período común
+> 2019–2020. Extenderla a toda el área (oeste/norte) requeriría una serie descendente más larga — un
+> próximo paso.
