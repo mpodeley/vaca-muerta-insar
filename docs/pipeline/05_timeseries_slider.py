@@ -162,6 +162,9 @@ def _write_html(frames, bounds, vmax):
     s, w, n, e = bounds
     cy, cx = (s + n) / 2, (w + e) / 2
     data = json.dumps(frames)
+    conc_path = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
+                     "concesiones_neuquina.geojson")
+    conc = json.dumps(json.load(open(conc_path))) if conc_path.exists() else "null"
     html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <title>Deformación acumulada — Vaca Muerta</title>
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
@@ -197,6 +200,8 @@ const map = L.map('map').fitBounds(B);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}',
   {{attribution:'Esri World Imagery'}}).addTo(map);
 const layers = FR.map(f => L.imageOverlay('data:image/png;base64,'+f.png, B, {{opacity:0}}).addTo(map));
+const CONC = {conc};
+if (CONC) L.geoJSON(CONC, {{style:{{fill:false,color:'#fff',weight:0.7,opacity:0.6}}}}).addTo(map);
 L.marker([{aoi.ANELO[0]},{aoi.ANELO[1]}]).addTo(map).bindTooltip('Añelo');
 const sl = document.getElementById('sl'), dt = document.getElementById('date');
 function show(i){{ layers.forEach((l,k)=>l.setOpacity(k==i?1:0)); dt.textContent = FR[i].label; }}

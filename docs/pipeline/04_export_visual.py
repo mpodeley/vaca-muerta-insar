@@ -37,6 +37,20 @@ HTML_OUT = HERE / "demo_subsidencia.html"
 
 _RAW = HERE / "_velocity_raw.tif"
 _MASK = HERE / "_mask.tif"
+CONCESIONES = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
+                   "concesiones_neuquina.geojson")
+
+
+def _add_concesiones(folium, m) -> None:
+    """Agrega los contornos de las concesiones (solo polígonos, sin relleno)."""
+    import json
+    if not CONCESIONES.exists():
+        return
+    folium.GeoJson(
+        json.load(open(CONCESIONES)), name="Concesiones",
+        style_function=lambda _f: {"fillOpacity": 0, "color": "#ffffff",
+                                   "weight": 0.7, "opacity": 0.6},
+    ).add_to(m)
 
 
 def _save_gdal(h5: Path, dset: str, out: Path) -> None:
@@ -119,6 +133,7 @@ def build_html() -> None:
         image=f"data:image/png;base64,{png_b64}",
         bounds=[[s, w], [n, e]], opacity=1.0, name="Velocidad LOS (mm/año)",
     ).add_to(m)
+    _add_concesiones(folium, m)
     folium.Marker(
         list(aoi.ANELO), tooltip="Añelo",
         icon=folium.Icon(color="gray", icon="home"),

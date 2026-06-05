@@ -22,6 +22,22 @@ import aoi
 HERE = Path(__file__).parent
 SRC = HERE / "_velocity_wgs84.tif"  # velocidad mm/año, EPSG:4326, enmascarada
 OUT = HERE / "heatmap_subsidencia.png"
+CONCESIONES = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
+                   "concesiones_neuquina.geojson")
+
+
+def _plot_concesiones(ax) -> None:
+    """Dibuja solo los contornos de las concesiones (lon/lat), sin relleno."""
+    import json
+    if not CONCESIONES.exists():
+        return
+    gj = json.load(open(CONCESIONES))
+    for f in gj["features"]:
+        g = f["geometry"]
+        polys = g["coordinates"] if g["type"] == "MultiPolygon" else [g["coordinates"]]
+        for poly in polys:
+            ring = np.array(poly[0])  # anillo exterior
+            ax.plot(ring[:, 0], ring[:, 1], color="#222", lw=0.4, alpha=0.45, zorder=4)
 
 
 def main() -> None:
@@ -48,6 +64,9 @@ def main() -> None:
         v, extent=[w, e, sth, n], origin="upper",
         cmap="RdBu", norm=norm, interpolation="nearest",
     )
+
+    # Contornos de las concesiones (solo polígonos, sin relleno).
+    _plot_concesiones(ax)
 
     # Solo Añelo como referencia (los yacimientos no se marcan).
     ax.scatter(*aoi.ANELO[::-1], marker="s", s=70, c="black",
