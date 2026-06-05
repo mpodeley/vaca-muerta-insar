@@ -1,45 +1,36 @@
-"""Área de interés (AOI) y constantes compartidas de la demo Fase 1.
+"""AOI y config — track 18 ASCENDENTE, frame 1050 (área ampliada oeste+norte, 2019–2026).
 
-AOI mínimo centrado en Añelo (núcleo de Vaca Muerta). Las coordenadas vienen de
-`docs/Fase-1-guia.md` §3 y del caso de negocio (Brunori et al. 2022). Son
-aproximadas: refinalas al activo concreto antes de gastar cómputo.
+A diferencia del track 112 descendente (fase1/, solo 2019–2020), el track 18 ascendente
+tiene cobertura CONTINUA 2019→2026 y se extiende al oeste (lon −71) y norte (lat −37.1).
+Muestreo ~mensual para mantener el cómputo/créditos acotados.
 """
 
 from __future__ import annotations
 
-# --- Bounding box (lon/lat) sobre el CLÚSTER DE MÁXIMA PRODUCCIÓN -----------
-# Núcleo "zona caliente" de Vaca Muerta en torno a Añelo, dentro de la huella
-# del frame 722 (verificado), así que NO requiere reprocesar.
-WEST = -69.10
-SOUTH = -38.65
-EAST = -68.40
-NORTH = -38.05
+# --- Bounding box ampliado (lon/lat): oeste + norte + sur sobre el frame 1050 ---
+WEST = -70.6
+SOUTH = -39.2
+EAST = -68.2
+NORTH = -37.3
 
-# --- Puntos de referencia (lat, lon) ---------------------------------------
-# Solo Añelo (pueblo, coordenada confiable) como orientación. NO marcamos los
-# bloques/yacimientos: las coords aproximadas estaban mal; los polígonos exactos
-# vienen de las concesiones oficiales (energia.gob.ar) y se cargarán para el pitch.
+# --- Referencia (lat, lon) ---
 ANELO = (-38.35, -68.79)
 
-# --- Ventana temporal de referencia ----------------------------------------
-# Brunori et al. 2022 detectó -8 a -10 mm/año con Sentinel-1/SBAS en 2017-2020.
-# Ventana 2019–2020 (~2 años) para una velocidad lineal robusta, acercándose al
-# período de Brunori et al. 2022 (2017-2020).
+# --- Ventana temporal: serie larga hasta el presente ---
 START = "2019-01-01"
-END = "2020-12-31"
+END = "2026-06-30"
 
-# Track Sentinel-1 y frame (fijados con 01_search.py sobre el AOI de Añelo).
-# Track 112 DESCENDING, frame 722 cubre Añelo (verificado, 21 escenas en 2019).
-# None en RELATIVE_ORBIT = que 01_search.py recomiende; None en FRAME = no filtrar.
-RELATIVE_ORBIT: int | None = 112
-FRAME: int | None = 722
+# --- Track / frame (ASCENDENTE) ---
+RELATIVE_ORBIT: int | None = 18
+FRAME: int | None = 1050
 
-# Directorio local donde se descargan los productos HyP3 (ignorado por git).
+# Muestreo ~mensual (1 escena por mes) para acotar jobs/créditos en la serie larga.
+MONTHLY = True
+
 PRODUCTS_DIR = "products"
 
 
 def polygon_wkt() -> str:
-    """AOI como POLYGON WKT (lon lat), formato que espera asf_search."""
     return (
         f"POLYGON(({WEST} {SOUTH},{EAST} {SOUTH},"
         f"{EAST} {NORTH},{WEST} {NORTH},{WEST} {SOUTH}))"
@@ -47,5 +38,4 @@ def polygon_wkt() -> str:
 
 
 def center_lonlat() -> tuple[float, float]:
-    """Centro del AOI como (lon, lat)."""
     return ((WEST + EAST) / 2.0, (SOUTH + NORTH) / 2.0)

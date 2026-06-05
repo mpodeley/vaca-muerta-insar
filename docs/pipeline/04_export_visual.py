@@ -149,7 +149,7 @@ def _legend_html(vmax: float) -> str:
       &nbsp;·&nbsp; 0 &nbsp;·&nbsp;
       <span style="color:#2166ac">■</span> uplift (+{vmax:.0f})<br>
       <span style="font-size:11px;color:#555">
-        Demo Fase 1 — Sentinel-1/SBAS 2019–2020, track 112 DESC, tropo ERA5.
+        Demo Fase 1 — Sentinel-1/SBAS 2019–2026, track 18 ASC, tropo ERA5.
         Pixels con coherencia temporal &gt;0.7. Muestra correlación, no causalidad.</span>
     </div>"""
 

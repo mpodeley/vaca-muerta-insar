@@ -71,6 +71,10 @@ def _reproject_to_4326(arr, src_transform, src_crs):
               resampling=Resampling.nearest, src_nodata=np.nan, dst_nodata=np.nan)
     west, north = dt.c, dt.f
     east, south = dt.c + dw * dt.a, dt.f + dh * dt.e
+    # downsample para que el HTML no pese (área grande → PNGs enormes)
+    step = max(1, int(np.ceil(max(dh, dw) / 800)))
+    if step > 1:
+        dst = dst[::step, ::step]
     return dst, (south, west, north, east)
 
 
@@ -184,7 +188,7 @@ def _write_html(frames, bounds, vmax):
   <div><b>Deformación acumulada</b> &nbsp; <span id="date"></span></div>
   <input type="range" id="sl" min="0" max="{len(frames)-1}" value="{len(frames)-1}" step="1">
   <div style="font-size:11px;color:#666;text-align:center">
-    Sentinel-1/SBAS 2019–2020 · tropo ERA5 · suavizado temporal · respecto a la 1ª fecha</div>
+    Sentinel-1/SBAS 2019–2026 · track 18 ASC · tropo ERA5 · suavizado · respecto a la 1ª fecha</div>
 </div>
 <script>
 const FR = {data};

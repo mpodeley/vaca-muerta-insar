@@ -9,30 +9,31 @@ La pregunta no es comercial sino metodológica:
 
 > **¿Se observa bien la subsidencia con InSAR satelital en esta zona, y los datos dicen algo?**
 
-![Mapa de velocidad de deformación sobre el clúster productivo de Añelo](assets/heatmap_subsidencia.png){ loading=lazy }
+![Mapa de velocidad de deformación, ~210×210 km en torno a Añelo](assets/heatmap_subsidencia.png){ loading=lazy }
 
-*Velocidad media de deformación 2019–2020 (mm/año). Rojo = subsidencia, azul = uplift. Fondo
-estable (~0) con señales localizadas. Sentinel-1/SBAS, corregido por atmósfera (ERA5).*
+*Velocidad media de deformación 2019–2026 (mm/año) sobre ~210×210 km. Rojo = subsidencia, azul =
+uplift. Fondo amplio estable con varias cubetas de subsidencia localizadas. Sentinel-1/SBAS (track 18
+ascendente), corregido por atmósfera (ERA5).*
 
 ## Respuesta corta
 
-**Sí.** Con datos gratuitos se obtiene un mapa de velocidad **creíble**: el fondo es estable
-(mediana ≈ 0 mm/año) y aparecen **zonas localizadas de subsidencia y uplift** de varios mm/año,
-coherentes con lo publicado para la cuenca (Brunori et al. 2022, –8 a –10 mm/año). Y sí, **los datos
-dicen algo**: hay una zona que **se hunde de forma sostenida (~15 mm/año)** a lo largo del valle —
-ver [Interpretación](interpretacion.md).
+**Sí.** Con datos gratuitos se obtiene un mapa de velocidad **creíble** sobre un área grande: el fondo
+es mayormente estable y aparecen **varias zonas localizadas de subsidencia** de hasta ~12 mm/año,
+coherentes con lo publicado para la cuenca (Brunori et al. 2022, −8 a −10 mm/año). Y sí, **los datos
+dicen algo**: hay zonas que **se hunden de forma sostenida** a lo largo de **7 años** —la principal
+acumuló ~82 mm— ver [Interpretación](interpretacion.md).
 
 ## Qué vas a encontrar acá
 
 - **[Método paso a paso](metodo.md)** — cómo se hizo, de la descarga de imágenes al mapa final, todo
   reproducible y con las fuentes.
 - **[Resultados](resultados.md)** — tres visualizaciones interactivas: un mapa de velocidad sobre
-  satélite, un *slider* temporal de deformación acumulada, y un heatmap.
+  satélite, un *slider* temporal de deformación acumulada (2019→2026), y un heatmap.
 - **[Interpretación](interpretacion.md)** — qué muestran los datos, la hipótesis del valle del río y
   el uso de agua, y los *caveats* (qué NO se puede afirmar).
 - **[Próximos pasos](proximos-pasos.md)** y **[Referencias](referencias.md)**.
 
 !!! note "Honestidad metodológica"
     InSAR mide **correlación espacio-temporal**, no causalidad. Este es un piloto de viabilidad con
-    datos gratuitos sobre ~20 meses; no reemplaza un estudio con validación de campo (GNSS) ni
-    distingue por sí solo el mecanismo de la deformación.
+    datos gratuitos sobre ~7 años y **una sola línea de vista** (track ascendente); no reemplaza un
+    estudio con validación de campo (GNSS) ni distingue por sí solo el mecanismo de la deformación.

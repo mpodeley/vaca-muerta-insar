@@ -4,10 +4,11 @@ El piloto responde la pregunta de viabilidad. Para convertirlo en algo robusto:
 
 ## Mejorar la medición
 
-- **Track ascendente.** Sumar la órbita ascendente permite **descomponer** la deformación LOS en
-  componentes **vertical y este-oeste** (hoy solo tenemos una línea de vista).
-- **Extender el histórico.** Sentinel-1 tiene datos desde ~2015; más años = velocidad más robusta y
-  detección de cambios de tendencia.
+- **Descomposición vertical / este-oeste.** Ya tenemos el track **ascendente** (18, este sitio) y un
+  track **descendente** (112) procesado para 2019–2020. Combinando ambas líneas de vista se puede
+  **separar** el movimiento vertical del horizontal — el paso natural siguiente.
+- **Extender más el histórico.** Sentinel-1 tiene datos desde ~2015; sumar 2015–2018 daría aún más
+  robustez. (Este experimento ya cubre 2019–2026.)
 - **GNSS de calibración.** No hay estaciones continuas cercanas; instalar una o dos daría **verdad de
   campo** y ataría el InSAR a un marco absoluto.
 
@@ -27,7 +28,7 @@ El piloto responde la pregunta de viabilidad. Para convertirlo en algo robusto:
 
 ## Limitaciones actuales (honestas)
 
-- Una sola línea de vista (no se separa vertical de horizontal).
-- ~20 meses de datos (tendencia corta).
+- Una sola línea de vista (ascendente): no se separa vertical de horizontal.
+- Muestreo ~mensual (se pierde algo de detalle sub-mensual / estacional fino).
 - Sin validación de campo (GNSS).
 - Zonas de baja coherencia (agua, regadío denso, pads activos) quedan sin dato.

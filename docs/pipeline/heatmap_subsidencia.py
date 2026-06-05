@@ -63,7 +63,7 @@ def main() -> None:
     )
     ax.text(
         0.5, 1.012,
-        "Sentinel-1 / SBAS 2019–2020 (track 112 DESC, frame 722) · corrección "
+        "Sentinel-1 / SBAS 2019–2026 (track 18 ASC, frame 1050) · corrección "
         "troposférica ERA5 · pixels con coherencia temporal >0.7",
         transform=ax.transAxes, ha="center", va="bottom", fontsize=8.5, color="#555",
     )

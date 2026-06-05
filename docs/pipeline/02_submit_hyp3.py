@@ -110,6 +110,15 @@ def main() -> None:
         )
 
     scenes = list_scenes(args.track, args.frame)
+    if getattr(aoi, "MONTHLY", False):
+        seen, monthly = set(), []
+        for s in scenes:
+            ym = s["startTime"][:7]
+            if ym not in seen:
+                seen.add(ym)
+                monthly.append(s)
+        print(f"Muestreo mensual: {len(scenes)} → {len(monthly)} escenas (1/mes)")
+        scenes = monthly
     if len(scenes) < 2:
         sys.exit(
             f"Solo {len(scenes)} escena(s) en track {args.track} frame {args.frame}; "
