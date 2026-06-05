@@ -30,6 +30,12 @@
 - **Sentinel-1** (ESA Copernicus), distribuido por **Alaska Satellite Facility (ASF)**.
 - **Sentinel-2** (óptico, NDVI) — uso de suelo / riego.
 
+## Producción y concesiones
+
+- **Producción por área** (gas/petróleo/agua, Capítulo IV) y **polígonos de concesiones** de la cuenca
+  Neuquina: datos públicos de la Secretaría de Energía / provincia de Neuquén
+  (`energianeuquen.gob.ar`), vía el proyecto [estado-del-sistema](https://github.com/mpodeley/estado-del-sistema).
+
 ## Fuentes hídricas y geológicas (Argentina) para cruzar
 
 - **AIC** — Autoridad Interjurisdiccional de las Cuencas de los ríos Limay, Neuquén y Negro.
