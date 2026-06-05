@@ -6,12 +6,27 @@
    un área grande (~210×210 km).
 2. **Varias cubetas de subsidencia localizadas** de hasta ~12 mm/año, del orden de lo publicado para
    la cuenca (−8 a −10 mm/año [Brunori 2022]), más algún foco de uplift.
-3. **Zonas que se hunden de forma sostenida durante 7 años**, asociadas a las zonas bajas / valle.
+3. **Zonas que se hunden de forma sostenida durante 7 años**, no estacionales.
+
+### Hay más de un mecanismo en juego
+
+Las cubetas de subsidencia no responden todas a la misma causa. Mirando *dónde* caen, aparecen **al
+menos dos firmas distintas**:
+
+- **Sobre los bloques de shale más activos** → consistente con **compactación del reservorio por
+  producción** (la presión de poro baja al extraer). Esta firma se desarrolla en
+  [Producción vs subsidencia](produccion.md), donde la subsidencia media por concesión correlaciona con
+  la producción de gas y el caso de Bandurria muestra el contraste inyección/extracción.
+- **Sobre zonas bajas / valle fluvial** → la hipótesis de **agua subterránea** que se discute abajo.
+
+Esta página se concentra en la segunda. Importa no mezclarlas: el agregado de "máxima subsidencia" que
+sigue **promedia pixels de ambas firmas** a lo largo de toda el área, no solo el valle.
 
 ## El hallazgo: subsidencia sostenida durante 7 años, no estacional
 
-Promediando la serie temporal sobre la **zona de máxima subsidencia** (~97.000 pixels, velocidad
-< −8 mm/año) y comparándola con una **zona estable** (~530.000 pixels):
+Promediando la serie temporal sobre **todos los pixels de subsidencia fuerte** (~97.000 pixels con
+velocidad < −8 mm/año, repartidos por toda el área —valle y bloques productivos—) y comparándola con una
+**zona estable** (~530.000 pixels):
 
 ![Serie temporal 2019–2026: zona subsidente vs estable](assets/point_timeseries.png){ loading=lazy }
 

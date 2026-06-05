@@ -3,6 +3,11 @@
 Hasta acá miramos *dónde* se deforma el suelo. Acá cruzamos ese mapa con dos capas más:
 **la producción de hidrocarburos por área** y la **descomposición vertical** del movimiento.
 
+Esta página desarrolla **una de las dos firmas de subsidencia** que aparecen en los datos: la asociada al
+**reservorio / producción**. La otra —cubetas sobre el **valle fluvial**, candidatas a extracción de agua
+subterránea— se discute en [Interpretación](interpretacion.md). Son mecanismos **complementarios**, no
+excluyentes.
+
 ## ¿Se hunden más las áreas que más producen?
 
 Para cada **concesión** (polígono oficial) se calculó la **subsidencia media** dentro del área

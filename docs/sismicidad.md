@@ -23,8 +23,9 @@ fecha/magnitud/profundidad.*
 Usando ISC/INPRES —mucho más completo que el catálogo global, **baja hasta ~M1.8**— aparecen **70
 eventos**, de los cuales **67 son corticales** (< 30 km, casi todos < 15 km). Se concentran al **oeste y
 suroeste de Añelo**, en la zona de **Sauzal Bonito**, justo donde la literatura ubica la sismicidad
-inducida. El mayor cortical es el **M4.8 del 7-mar-2019**. Y hay un dato llamativo: **41 de los 70 sismos
-ocurrieron en 2023** — un enjambre marcado.
+inducida. El mayor cortical es el **M4.8 del 7-mar-2019** —el mismo evento que Brunori (2022) reporta
+como **Mw 5**; los catálogos dan magnitudes algo distintas para un mismo sismo según el método de
+cálculo—. Y hay un dato llamativo: **41 de los 70 sismos ocurrieron en 2023** — un enjambre marcado.
 
 !!! warning "Caveats (importantes)"
     - **El aumento es en parte detección.** La red sísmica local recién **densifica desde ~2018**, así
