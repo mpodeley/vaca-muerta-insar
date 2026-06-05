@@ -16,6 +16,15 @@
 - **[Aguascalientes 2021]** Structurally-controlled subsidence by groundwater exploitation,
   Aguascalientes Valley (México). [ScienceDirect](https://www.sciencedirect.com/science/article/abs/pii/S0034425720306271)
 
+## Sismicidad inducida
+
+- **[Schultz 2024]** Schultz et al. (2024), *Seismica* — "Chasing the ghost of fracking in the Vaca
+  Muerta"; ~0.5 % de operaciones asociadas a sismos. [seismica.library.mcgill.ca](https://seismica.library.mcgill.ca/article/view/1435)
+- **[Sagripanti 2018]** Sagripanti et al. (2018), *J. South American Earth Sciences* — sismicidad
+  intraplaca con red local, eventos cerca de Añelo posiblemente antropogénicos.
+- **Catálogo sísmico:** **USGS** FDSN event service (earthquake.usgs.gov); para Argentina, **INPRES**
+  (inpres.gob.ar) tiene umbral de detección más bajo.
+
 ## Software y procesamiento
 
 - **[Yunjun 2019]** Yunjun, Fattahi & Amelung (2019), *Computers & Geosciences* — **MintPy**, software de
