@@ -15,24 +15,25 @@ el 7 de marzo de 2019**, somero, cerca de Añelo [Brunori 2022]. Estudios recien
 
 <iframe src="../assets/demo_sismicidad.html" width="100%" height="540" style="border:1px solid #ccc;border-radius:6px"></iframe>
 
-*Catálogo USGS 2015–2026. Amarillo = sismos **corticales** (< 30 km, candidatos a inducidos); gris =
-**profundos** (subducción, no relacionados). Tamaño ∝ magnitud. Fondo = velocidad InSAR. Click en un
-sismo para ver fecha/magnitud/profundidad.*
+*Catálogo **ISC** (que agrega los reportes de **INPRES**, la red argentina), 2015–2026. Amarillo =
+sismos **corticales** (< 30 km, candidatos a inducidos); gris = **profundos** (subducción, no
+relacionados). Tamaño ∝ magnitud. Fondo = velocidad InSAR. Click en un sismo para ver
+fecha/magnitud/profundidad.*
 
-De los 11 sismos del catálogo en el área, **8 son corticales** (< 30 km) — los relevantes para
-sismicidad inducida — y se dispersan al **oeste y suroeste de Añelo**, hacia Sauzal Bonito. Los 3
-restantes son profundos (> 180 km, subducción de la placa de Nazca) y no tienen relación con la
-actividad de superficie. El mayor cortical es el **M5.0 de 2019**.
+Usando ISC/INPRES —mucho más completo que el catálogo global, **baja hasta ~M1.8**— aparecen **70
+eventos**, de los cuales **67 son corticales** (< 30 km, casi todos < 15 km). Se concentran al **oeste y
+suroeste de Añelo**, en la zona de **Sauzal Bonito**, justo donde la literatura ubica la sismicidad
+inducida. El mayor cortical es el **M4.8 del 7-mar-2019**. Y hay un dato llamativo: **41 de los 70 sismos
+ocurrieron en 2023** — un enjambre marcado.
 
 !!! warning "Caveats (importantes)"
-    - **Catálogo incompleto.** USGS solo cataloga eventos de **M ≳ 3.4**. Los **micro-sismos inducidos
-      (< M3)** que detectan las redes sísmicas locales **no aparecen** acá — son la mayoría de la
-      sismicidad inducida real.
-    - **Ubicación aproximada.** Las localizaciones globales del USGS tienen **±10–30 km** de error; las
-      redes locales relocalizan los eventos mucho mejor (el M5 de 2019 se modela cerca de Sauzal Bonito,
-      a pocos km de profundidad).
-    - **Correlación temporal, no causalidad.** La asociación entre actividad y sismicidad es estadística
-      y temporal; **no es una prueba de causa**. Atribuir cada sismo requiere datos locales (red sísmica,
+    - **El aumento es en parte detección.** La red sísmica local recién **densifica desde ~2018**, así
+      que parte del "aumento" de sismos es mejor capacidad de detección, no solo más actividad. Separar
+      ambos efectos requiere el análisis cuidadoso que hacen los estudios especializados [Schultz 2024].
+    - **Sigue habiendo un piso de magnitud.** Aun ISC/INPRES pierde los micro-sismos más chicos que sí
+      registran las redes densas locales del *Observatorio de Sismicidad Inducida* (600+ temblores).
+    - **Correlación temporal, no causalidad.** La asociación actividad↔sismicidad es estadística y
+      temporal; **no es una prueba de causa**. Atribuir cada sismo requiere datos locales (red sísmica,
       presiones de inyección).
 
 ## Por qué importa juntar las dos capas

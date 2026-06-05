@@ -22,8 +22,9 @@
   Muerta"; ~0.5 % de operaciones asociadas a sismos. [seismica.library.mcgill.ca](https://seismica.library.mcgill.ca/article/view/1435)
 - **[Sagripanti 2018]** Sagripanti et al. (2018), *J. South American Earth Sciences* — sismicidad
   intraplaca con red local, eventos cerca de Añelo posiblemente antropogénicos.
-- **Catálogo sísmico:** **USGS** FDSN event service (earthquake.usgs.gov); para Argentina, **INPRES**
-  (inpres.gob.ar) tiene umbral de detección más bajo.
+- **Catálogo sísmico:** **ISC** FDSN event service (isc.ac.uk), que agrega los reportes de **INPRES**
+  (inpres.gob.ar, autor "SJA"); baja a ~M1.8. El **Observatorio de Sismicidad Inducida** (red local)
+  registra el detalle fino (600+ temblores). **USGS** (earthquake.usgs.gov) solo capta M≳3.4.
 
 ## Software y procesamiento
 
