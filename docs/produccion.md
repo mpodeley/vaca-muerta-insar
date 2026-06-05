@@ -43,6 +43,27 @@ Físicamente es esperable: la extracción baja la presión de poro del reservori
     - **Períodos distintos:** producción acumulada 2006–2026 vs subsidencia 2019–2026.
     - Es **subsidencia del reservorio/área**, no necesariamente sobre cada pozo.
 
+## Caso ilustrativo: Bandurria, inyección vs extracción
+
+Dos concesiones pegadas muestran el contraste más claro de todo el experimento:
+
+![Bandurria Norte (uplift) vs Bandurria Sur (subsidencia)](assets/bandurria.png){ loading=lazy }
+
+| | Producción (abr-2026) | Deformación (7 años) |
+|---|---|---|
+| **Bandurria Sur** (YPF) | 198 pozos activos, gas + petróleo + agua | **−80 mm** (subsidencia sostenida) |
+| **Bandurria Norte** (Vista) | **0 pozos activos, 0 producción** (5 pozos no-conv. sin producir) | **+80 mm** (uplift sostenido) |
+
+Las dos series son **imagen especular**: una baja y la otra sube, de forma monótona durante 7 años. Un
+bloque que **no produce nada pero se levanta +80 mm** es la **firma típica de inyección de fluidos**
+(descarte de agua de producción / mantenimiento de presión): la inyección sube la presión de poro y el
+suelo se infla. Al lado, la extracción intensa de Bandurria Sur hace lo contrario.
+
+!!! warning "Caveat"
+    El +80 mm de Bandurria Norte es **LOS ascendente**, no confirmado como vertical puro (la
+    descomposición no llega hasta ahí). Podría incluir algo de movimiento horizontal. Pero producción
+    cero + inflado sostenido + el vecino hundiéndose hacen de la **inyección** la lectura más plausible.
+
 ## Descomposición vertical { #descomposicion-vertical }
 
 Combinando una órbita **ascendente** (track 18) con una **descendente** (track 112) sobre la zona de
