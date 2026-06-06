@@ -81,6 +81,22 @@ es claro: **domina la depleción, y los mecanismos secundarios no se aíslan** c
 - La **inyección** no coincide espacialmente con el uplift; entre inyectores, *más* inyección va con
   *más* subsidencia (se co-localiza con producción intensa que la enmascara).
 
+### Footprint de la inyección
+
+Para dimensionar la inyección, dibujamos cada inyector como una **burbuja** cuyo radio es el del
+cilindro de poro que llenaría el agua inyectada acumulada: **r = √(V·Bw / (π·h·φ))**, asumiendo un
+espesor receptor *h* = 30 m y porosidad *φ* = 0.15 (volúmenes de ~0.5–2.5 Mm³ → radios de ~190–430 m).
+El relleno indica la velocidad LOS local.
+
+![Burbujas de inyección de agua](assets/inyeccion_burbujas.png){ loading=lazy }
+
+<iframe src="../assets/demo_inyeccion_burbujas.html" width="100%" height="560" style="border:1px solid #ccc;border-radius:6px"></iframe>
+
+Las burbujas grandes caen sobre terreno **rojo (subsidencia)**, no sobre uplift: refuerza que la
+inyección —donde es importante— está dentro de bloques que producen y se hunden. (Nota: *r* es el
+radio de **relleno de poro**, no el radio de **influencia de presión**, que es mayor y depende de la
+permeabilidad; y escala como 1/√(h·φ).)
+
 Es un resultado honesto del experimento: con datos abiertos se ve la **señal de primer orden**
 (extracción → depleción de presión → compactación), pero separar los efectos geomecánicos finos
 requeriría datos que no son públicos (presiones, PVT, series por pozo, GNSS de calibración).
