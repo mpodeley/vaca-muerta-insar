@@ -18,6 +18,10 @@ Seis instantáneas entre 2019 y 2026. En cada panel:
 - En ambos: **anillo** = voidage de reservorio **total** acumulado hasta esa fecha; **relleno** = la
   parte que es **petróleo** (Np·Bo). Misma escala volumétrica (rm³), así el anillo visible es el aporte
   de **agua + gas** de reservorio.
+- **Azul** = **inyección de agua** acumulada (Wi·Bw), en la **misma escala volumétrica** que la
+  producción → se ve que cada inyector mueve un volumen de reservorio **mayor** que el mayor productor.
+- Cada pozo **aparece a partir de su completion** (fecha fin de terminación), con un marcador mínimo que
+  luego crece con el volumen.
 
 !!! note "Por qué importan los pozos solo-boca"
     El dataset público de **trayectorias corta en nov-2023**. Si se omiten esos 105 pozos, en **2025 se
@@ -60,13 +64,15 @@ y lo superpone con la **subsidencia mediana sobre los pozos** (línea roja, eje 
 
 El petróleo es la mayor componente del voidage, y la curva de subsidencia **se despega justo cuando
 despega el voidage** (~2022) — el mismo acople producción↔compactación de la página por pozo, ahora
-resuelto en el tiempo y sobre un bloque concreto.
+resuelto en el tiempo y sobre un bloque concreto. La línea **azul** es la inyección de agua del bloque
+(9 inyectores, ~5.1 Mm³) y la **punteada** el voidage **neto** (producción − inyección): la inyección
+recién pesa desde 2024 y no alcanza a frenar la subsidencia, dominada por la extracción.
 
 !!! warning "Caveats"
     - **Pozos solo-boca:** 105 de los 220 se ubican en la **boca** (sin trayectoria pública); su elipse
       es un **círculo** sin orientación y posicionado en el pad, no sobre la rama drenada.
-    - El voidage del panel es de **producción** (no resta la inyección de agua del bloque, que ocurre en
-      pozos inyectores aparte).
+    - **Inyección incompleta:** se grafican los 9 inyectores que aparecen en el Cap IV de este set; la
+      ubicación del inyector es su boca/pad.
     - **FVF aproximados** (Bo≈1.4, Bw≈1.03, Bg≈0.0035 rm³/sm³): valen para comparación relativa, no como
       balance volumétrico exacto.
     - **Correlación, no causalidad**; el voidage es colineal con la producción.

@@ -81,9 +81,10 @@ def main():
     wells = json.load(open(DATA / "bsur_wells_all.json"))
     mon = pd.read_csv(DATA / "bsur_monthly_perwell_all.csv").sort_values("ym")
     mon["v_oil"] = mon.prod_pet.clip(lower=0) * BO
+    mon["v_inj"] = mon.iny_agua.clip(lower=0) * BW
     mon["v_tot"] = mon.v_oil + mon.prod_agua.clip(lower=0) * BW + mon.prod_gas.clip(lower=0) * 1000 * BG
     g = mon.groupby("idpozo")
-    mon["cum_tot"] = g.v_tot.cumsum(); mon["cum_oil"] = g.v_oil.cumsum()
+    mon["cum_tot"] = g.v_tot.cumsum(); mon["cum_oil"] = g.v_oil.cumsum(); mon["cum_inj"] = g.v_inj.cumsum()
 
     for idp, w in wells.items():
         if w["has_traj"]:
@@ -143,25 +144,29 @@ def main():
 
     # voidage acumulado por pozo en cada paso
     ymsel = [f"{d[:4]}-{d[4:6]}" for d in dates_sel]
-    cum = mon.groupby(["idpozo", "ym"])[["cum_tot", "cum_oil"]].last()
+    cum = mon.groupby(["idpozo", "ym"])[["cum_tot", "cum_oil", "cum_inj"]].last()
     ct_max = float(mon.cum_tot.max())
     wlist = []
     for idp, w in wells.items():
         sub = cum.loc[int(idp)] if int(idp) in cum.index.get_level_values(0) else None
-        ct, co = [], []
-        prev_t = prev_o = 0.0
+        ct, co, ci = [], [], []
+        pt = po = pi = 0.0
         for ym in ymsel:
-            if sub is not None and ym in sub.index:
-                prev_t, prev_o = float(sub.loc[ym, "cum_tot"]), float(sub.loc[ym, "cum_oil"])
-            elif sub is not None:
+            if sub is not None:
                 past = sub[sub.index <= ym]
                 if len(past):
-                    prev_t, prev_o = float(past.cum_tot.iloc[-1]), float(past.cum_oil.iloc[-1])
-            ct.append(round(prev_t, 1)); co.append(round(prev_o, 1))
+                    pt = float(past.cum_tot.iloc[-1]); po = float(past.cum_oil.iloc[-1])
+                    pi = float(past.cum_inj.iloc[-1])
+            ct.append(round(pt, 1)); co.append(round(po, 1)); ci.append(round(pi, 1))
+        # primer paso activo: completion (o 1er volumen si falta completion)
+        comp = w.get("comp"); c0 = len(ymsel)
+        for i, ym in enumerate(ymsel):
+            if (comp and ym >= comp) or ct[i] > 0 or ci[i] > 0:
+                c0 = i; break
         wlist.append({"lat": round(w["cy_lat"], 6), "lon": round(w["cx_lon"], 6),
                       "ang": round(w["ang"], 1), "ht": 1 if w["has_traj"] else 0,
                       "traj": [[round(p[1], 6), round(p[0], 6)] for p in w["traj"]] if w["has_traj"] else None,
-                      "ct": ct, "co": co})
+                      "ct": ct, "co": co, "ci": ci, "c0": c0})
 
     write_html(frames, bounds, vmax, wlist, ct_max)
     print(f"Listo → {OUT}  ({len(frames)} pasos, {len(wlist)} pozos, vmax {vmax:.0f} mm)")
@@ -202,6 +207,7 @@ def write_html(frames, bounds, vmax, wells, ct_max):
  <div class="bl"><span>−{vmax:.0f} mm</span><span>0</span><span>+{vmax:.0f} mm</span></div>
  <div class="ell"><span class="sw"></span>voidage total acum. (elipse=trayectoria)</div>
  <div class="ell"><span class="sw oil"></span>parte petróleo</div>
+ <div class="ell"><span class="sw" style="background:rgba(21,96,208,.30);border-color:#1560d0"></span>inyección de agua</div>
  <div class="ell"><span class="sw boca"></span>pozo solo-boca (s/trayect.)</div>
 </div>
 <div class="panel">
@@ -211,7 +217,7 @@ def write_html(frames, bounds, vmax, wells, ct_max):
    Sentinel-1/SBAS · subsidencia (rojo) vs uplift (azul) · elipse = voidage de reservorio por pozo (anillo total, relleno petróleo)</div>
 </div>
 <script>
-const FR={json.dumps(frames)}, WELLS={json.dumps(wells)}, CTMAX={ct_max}, AMAX=900, ASPECT=3.0;
+const FR={json.dumps(frames)}, WELLS={json.dumps(wells)}, CTMAX={ct_max}, AMAX=900, AMIN=110, ASPECT=3.0, INJ='#1560d0';
 const B=[[{s},{w}],[{n},{e}]];
 const map=L.map('map').fitBounds(B);
 L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{{z}}/{{y}}/{{x}}',
@@ -223,27 +229,32 @@ if(CONC) L.geoJSON(CONC,{{style:{{fill:false,color:'#fff',weight:1.4,opacity:0.8
 WELLS.forEach(p=>{{if(p.traj) L.polyline(p.traj,{{color:'#222',weight:1,opacity:0.5}}).addTo(map);}});
 const ellGrp=L.layerGroup().addTo(map);
 const M_LAT=111320;
-function shape(lat,lon,angDeg,a_m,aspect,fill,boca){{
-  if(a_m<25) return null;
+function poly(lat,lon,angDeg,a_m,aspect){{
   const b_m=a_m/aspect, th=angDeg*Math.PI/180, mlon=M_LAT*Math.cos(lat*Math.PI/180);
   const pts=[];
   for(let i=0;i<=28;i++){{const t=2*Math.PI*i/28;
     const dx=(a_m/2)*Math.cos(t), dy=(b_m/2)*Math.sin(t);
     const rx=dx*Math.cos(th)-dy*Math.sin(th), ry=dx*Math.sin(th)+dy*Math.cos(th);
     pts.push([lat+ry/M_LAT, lon+rx/mlon]);}}
-  if(fill) return L.polygon(pts,{{stroke:false,fillColor:'#141414',fillOpacity:0.45}});
-  return L.polygon(pts, boca
-    ?{{color:'#1f4eb4',weight:1.1,dashArray:'3 2',fill:false,opacity:0.9}}
-    :{{color:'#111',weight:1,fill:false,opacity:0.9}});
+  return pts;
 }}
 function drawEll(i){{
   ellGrp.clearLayers();
   WELLS.forEach(p=>{{
+    if(i<p.c0) return;                       // aparece a partir de su completion
     const asp=p.ht?ASPECT:1.0, boca=!p.ht;
-    const at=AMAX*Math.sqrt(Math.max(p.ct[i],0)/CTMAX);
+    // inyección de agua (azul) — misma escala
+    const ainj=AMAX*Math.sqrt(Math.max(p.ci[i],0)/CTMAX);
+    if(ainj>=25){{
+      L.polygon(poly(p.lat,p.lon,p.ang,ainj,asp),{{color:INJ,weight:1.1,fillColor:INJ,fillOpacity:0.28,opacity:0.9,dashArray:boca?'3 2':null}}).addTo(ellGrp);
+    }}
+    // producción: anillo total (mínimo al completarse) + relleno petróleo
+    const at=Math.max(AMAX*Math.sqrt(Math.max(p.ct[i],0)/CTMAX), AMIN);
     const ao=AMAX*Math.sqrt(Math.max(p.co[i],0)/CTMAX);
-    const e1=shape(p.lat,p.lon,p.ang,at,asp,false,boca); if(e1)e1.addTo(ellGrp);
-    const e2=shape(p.lat,p.lon,p.ang,ao,asp,true,boca); if(e2)e2.addTo(ellGrp);
+    L.polygon(poly(p.lat,p.lon,p.ang,at,asp), boca
+      ?{{color:'#1f4eb4',weight:1.1,dashArray:'3 2',fill:false,opacity:0.9}}
+      :{{color:'#111',weight:1,fill:false,opacity:0.9}}).addTo(ellGrp);
+    if(ao>=25) L.polygon(poly(p.lat,p.lon,p.ang,ao,asp),{{stroke:false,fillColor:'#141414',fillOpacity:0.45}}).addTo(ellGrp);
   }});
 }}
 const sl=document.getElementById('sl'), dt=document.getElementById('date');

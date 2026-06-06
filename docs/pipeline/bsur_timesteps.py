@@ -40,6 +40,8 @@ MARGIN_PX = 12
 BO, BW, BG = 1.4, 1.03, 0.0035   # FVF rm³/sm³ (consistente con voidage.py)
 ASPECT = 3.2                      # elipse: eje mayor / eje menor
 A_MAX = 2300.0                    # eje mayor [m] para el voidage máximo
+A_MIN = 260.0                     # marcador mínimo [m] al completarse el pozo (aún sin volumen)
+INJ_EC = "#1560d0"               # color inyección de agua
 
 tr = Transformer.from_crs("EPSG:4326", "EPSG:32719", always_xy=True)
 
@@ -61,6 +63,7 @@ def main() -> None:
     g = mon.groupby("idpozo")
     mon["cum_tot"] = g.v_tot.cumsum()
     mon["cum_oil"] = g.v_oil.cumsum()
+    mon["cum_inj"] = g.v_inj.cumsum()
 
     # geometría: centroide de la rama (con trayectoria) o boca (sin)
     for idp, w in wells.items():
@@ -105,7 +108,7 @@ def main() -> None:
         return a, a / ASPECT
 
     def cum_at(ym):
-        s = mon[mon.ym <= ym].groupby("idpozo")[["cum_tot", "cum_oil"]].last()
+        s = mon[mon.ym <= ym].groupby("idpozo")[["cum_tot", "cum_oil", "cum_inj"]].last()
         return s.to_dict("index")
 
     fig = plt.figure(figsize=(16.5, 13))
@@ -120,22 +123,36 @@ def main() -> None:
                        vmin=vmin, vmax=vmax, aspect="equal")
         cum = cum_at(ym)
         for idp, w in wells.items():
+            # aparece a partir de su completion (o, si falta, del 1er volumen)
+            comp = w.get("comp")
+            c = cum.get(int(idp))
+            ct = c["cum_tot"] if c else 0.0
+            ci = c["cum_inj"] if c else 0.0
+            completed = (comp is not None and ym >= comp) or ct > 0 or ci > 0
+            if not completed:
+                continue
             if w["has_traj"]:
                 ax.plot(*tr.transform([p[0] for p in w["traj"]], [p[1] for p in w["traj"]]),
                         "-", color="0.3", lw=0.4, alpha=0.5, zorder=3)
-            c = cum.get(int(idp))
-            if not c or c["cum_tot"] <= 0:
-                continue
-            ec = "k" if w["has_traj"] else "#1f4eb4"
-            ls = "solid" if w["has_traj"] else (0, (2, 1.4))
             ang = w["ang"] if w["has_traj"] else 0.0
             asp = ASPECT if w["has_traj"] else 1.0  # solo-boca = círculo
-            aw, bw = axes_for(c["cum_tot"]); bw = aw / asp
+            ls = "solid" if w["has_traj"] else (0, (2, 1.4))
+            # inyección de agua (azul) — misma escala volumétrica
+            if ci > 0:
+                ai, _ = axes_for(ci); bi = ai / asp
+                ax.add_patch(Ellipse((w["cx"], w["cy"]), ai, bi, angle=ang, facecolor=INJ_EC,
+                                     edgecolor=INJ_EC, lw=0.8, ls=ls, alpha=0.30, zorder=6))
+                ax.add_patch(Ellipse((w["cx"], w["cy"]), ai, bi, angle=ang, facecolor="none",
+                                     edgecolor=INJ_EC, lw=0.9, ls=ls, alpha=0.9, zorder=6))
+            # producción: anillo = voidage total, relleno = petróleo (mínimo al completarse)
+            aw = max(axes_for(ct)[0], A_MIN); bw = aw / asp
+            ec = "k" if w["has_traj"] else "#1f4eb4"
             ax.add_patch(Ellipse((w["cx"], w["cy"]), aw, bw, angle=ang, facecolor="none",
                                  edgecolor=ec, lw=0.7, ls=ls, alpha=0.85, zorder=5))
-            ao, _ = axes_for(c["cum_oil"]); bo = ao / asp
-            ax.add_patch(Ellipse((w["cx"], w["cy"]), ao, bo, angle=ang, facecolor="#1a1a1a",
-                                 edgecolor="none", alpha=0.32, zorder=4))
+            if c and c["cum_oil"] > 0:
+                ao = axes_for(c["cum_oil"])[0]; bo = ao / asp
+                ax.add_patch(Ellipse((w["cx"], w["cy"]), ao, bo, angle=ang, facecolor="#1a1a1a",
+                                     edgecolor="none", alpha=0.32, zorder=4))
         ax.set_title(ym, fontsize=11)
         ax.set_xticks([]); ax.set_yticks([])
 
@@ -150,6 +167,8 @@ def main() -> None:
                    label=f"{frac*vtot_max/1e3:.0f} mil rm³")))
     leg.append(map_axes[0].add_patch(Ellipse((np.nan, np.nan), 1, 1, facecolor="#1a1a1a",
                alpha=0.32, label="parte petróleo")))
+    leg.append(map_axes[0].add_patch(Ellipse((np.nan, np.nan), 1, 1, facecolor=INJ_EC,
+               edgecolor=INJ_EC, alpha=0.4, label="inyección de agua")))
     leg.append(map_axes[0].add_patch(Ellipse((np.nan, np.nan), 1, 1, facecolor="none",
                edgecolor="#1f4eb4", ls=(0, (2, 1.4)), lw=0.9, label="pozo solo-boca (s/trayect.)")))
     map_axes[0].legend(handles=leg, title="Voidage acum. (anillo=total)",
@@ -162,6 +181,9 @@ def main() -> None:
     axd.stackplot(t, cumb.v_oil, cumb.v_wat, cumb.v_gas,
                   labels=["petróleo (Np·Bo)", "agua (Wp·Bw)", "gas (Gp·Bg)"],
                   colors=["#4d4d4d", "#74add1", "#f4a582"], alpha=0.9)
+    net = cumb.v_oil + cumb.v_wat + cumb.v_gas - cumb.v_inj
+    axd.plot(t, net, "k--", lw=1.5, label="voidage NETO (− iny. agua)")
+    axd.plot(t, cumb.v_inj, color=INJ_EC, lw=1.6, label="inyección de agua (Wi·Bw)")
     axd.set_ylabel("Voidage acumulado del bloque [Mm³ reservorio]")
     axd.set_xlabel("fecha")
     axd.legend(loc="upper left", fontsize=8, ncol=3)
