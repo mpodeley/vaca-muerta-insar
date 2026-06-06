@@ -82,3 +82,43 @@ recién pesa desde 2024 y no alcanza a frenar la subsidencia, dominada por la ex
 *Datos: Capítulo IV (producción mensual por pozo, trayectorias) de la Secretaría de Energía; serie
 temporal InSAR de este trabajo. Reproducible con `pipeline/fetch_bsur_monthly.py` (serie mensual por
 pozo) y `pipeline/bsur_timesteps.py` (figura).*
+
+## ¿Más resolución revela efectos más cercanos al pozo?
+
+El mapa de subsidencia del sitio está a **80 m de píxel** (productos HyP3 `INT80`). ¿Conviene afinarlo
+para ver detalle a escala de pozo? Hicimos un **reproceso piloto (2022–2026)** acotado a Bandurria Sur:
+re-encargamos los interferogramas a HyP3 como **multi-burst** a **40 m** (`INT40`, looks 10×2) y **20 m**
+(`INT20`, looks 5×1), y corrimos MintPy SBAS con el **mismo** punto de referencia, corrección
+troposférica **ERA5** y *deramp* en los tres — para que la comparación sea **1:1 en magnitud**.
+
+![80 vs 40 vs 20 m — subsidencia acumulada 2022→2026 sobre los pozos](assets/compare_resolutions.png){ loading=lazy }
+
+- **80 → 40 m:** salto real de detalle. El cuenco deja de ser una mancha lisa y se resuelve en
+  estructura, con gradientes que se alinean con las filas de laterales.
+- **40 → 20 m:** sólo un poco más de nitidez en bordes — **rendimiento decreciente**.
+
+!!! note "Hay un techo físico"
+    La subsidencia en superficie es una **imagen pasa-bajos** de la compactación profunda: el ancho de
+    la cubeta de un pozo es **≈ la profundidad del reservorio** (~2.8 km acá). Por eso, más allá de
+    ~40 m el píxel fino sobre todo agrega textura/ruido somero, **no** señal profunda nueva. Para señal
+    a escala de **pad** haría falta **PS-InSAR** (dispersores puntuales sobre las locaciones) — en
+    preparación.
+
+### Zoom de alta resolución (20 m) sobre los pozos con trayectoria
+
+A 20 m y recortando al núcleo de pozos con trayectoria, se ve el cuenco **formándose sobre las filas de
+laterales** a lo largo del tiempo:
+
+![Subsidencia a 20 m sobre los pozos con trayectoria, por timestep](assets/bsur_hires_timesteps.png){ loading=lazy }
+
+Hasta 2022 el terreno está plano; desde 2023 el hundimiento aparece y se profundiza **encima del
+racimo de ramas**, justo donde el voidage de petróleo es mayor — el mismo acople, ahora a 20 m.
+
+!!! warning "Caveats del reproceso fino"
+    - **Piloto 2022–2026** (no toda la serie), multi-burst sobre 2 bursts IW2 que cubren el bloque.
+    - El 80 m del panel comparativo se **re-procesó local** (mismo subset/ref/deramp/ERA5) para ser 1:1;
+      difiere del mapa scene-wide del resto del sitio (deramp a escala de escena).
+    - **PS-InSAR (MiaplPy)** en proceso; agregará el panel de deformación por pad.
+
+*Reproducible: `pipeline/reproc/` (submit_burst.py → HyP3 multi-burst; compare_resolutions.py;
+bsur_hires_timesteps.py). InSAR Sentinel-1, HyP3/ASF + MintPy + ERA5.*
