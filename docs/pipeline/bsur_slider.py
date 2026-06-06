@@ -78,22 +78,28 @@ def main():
     from pyproj import Transformer
     fwd = Transformer.from_crs("EPSG:4326", "EPSG:32719", always_xy=True)
 
-    wells = json.load(open(DATA / "bsur_wells.json"))
-    mon = pd.read_csv(DATA / "bsur_monthly_perwell.csv").sort_values("ym")
+    wells = json.load(open(DATA / "bsur_wells_all.json"))
+    mon = pd.read_csv(DATA / "bsur_monthly_perwell_all.csv").sort_values("ym")
     mon["v_oil"] = mon.prod_pet.clip(lower=0) * BO
     mon["v_tot"] = mon.v_oil + mon.prod_agua.clip(lower=0) * BW + mon.prod_gas.clip(lower=0) * 1000 * BG
     g = mon.groupby("idpozo")
     mon["cum_tot"] = g.v_tot.cumsum(); mon["cum_oil"] = g.v_oil.cumsum()
 
     for idp, w in wells.items():
-        xs, ys = fwd.transform([p[0] for p in w["coords"]], [p[1] for p in w["coords"]])
-        xs, ys = np.array(xs), np.array(ys)
-        w["cx_lon"] = float(np.mean([p[0] for p in w["coords"]]))
-        w["cy_lat"] = float(np.mean([p[1] for p in w["coords"]]))
-        pts = np.column_stack([xs - xs.mean(), ys - ys.mean()])
-        _, _, vt = np.linalg.svd(pts, full_matrices=False)
-        w["ang"] = float(np.degrees(np.arctan2(vt[0][1], vt[0][0])))  # azimut lateral (matemático)
-        w["_cx"], w["_cy"] = float(xs.mean()), float(ys.mean())
+        if w["has_traj"]:
+            xs, ys = fwd.transform([p[0] for p in w["traj"]], [p[1] for p in w["traj"]])
+            xs, ys = np.array(xs), np.array(ys)
+            w["cx_lon"] = float(np.mean([p[0] for p in w["traj"]]))
+            w["cy_lat"] = float(np.mean([p[1] for p in w["traj"]]))
+            pts = np.column_stack([xs - xs.mean(), ys - ys.mean()])
+            _, _, vt = np.linalg.svd(pts, full_matrices=False)
+            w["ang"] = float(np.degrees(np.arctan2(vt[0][1], vt[0][0])))  # azimut lateral (matemático)
+            w["_cx"], w["_cy"] = float(xs.mean()), float(ys.mean())
+        else:
+            w["cx_lon"], w["cy_lat"] = w["boca"][0], w["boca"][1]
+            x, y = fwd.transform(w["boca"][0], w["boca"][1])
+            w["ang"] = 0.0
+            w["_cx"], w["_cy"] = float(x), float(y)
 
     with h5py.File(TS, "r") as h:
         a = dict(h.attrs)
@@ -153,8 +159,8 @@ def main():
                     prev_t, prev_o = float(past.cum_tot.iloc[-1]), float(past.cum_oil.iloc[-1])
             ct.append(round(prev_t, 1)); co.append(round(prev_o, 1))
         wlist.append({"lat": round(w["cy_lat"], 6), "lon": round(w["cx_lon"], 6),
-                      "ang": round(w["ang"], 1),
-                      "traj": [[round(p[1], 6), round(p[0], 6)] for p in w["coords"]],
+                      "ang": round(w["ang"], 1), "ht": 1 if w["has_traj"] else 0,
+                      "traj": [[round(p[1], 6), round(p[0], 6)] for p in w["traj"]] if w["has_traj"] else None,
                       "ct": ct, "co": co})
 
     write_html(frames, bounds, vmax, wlist, ct_max)
@@ -187,14 +193,16 @@ def write_html(frames, bounds, vmax, wells, ct_max):
  .ell{{display:flex;gap:6px;align-items:center;margin-top:6px;font-size:11px;color:#333}}
  .sw{{width:16px;height:9px;border:1px solid #111;border-radius:50%}}
  .sw.oil{{background:rgba(20,20,20,.55);border:none}}
+ .sw.boca{{width:11px;height:11px;border:1.4px dashed #1f4eb4;border-radius:50%}}
  #play{{cursor:pointer;border:none;background:#334;color:#fff;border-radius:5px;padding:2px 9px;font-size:13px}}
 </style></head><body>
 <div id="map"></div>
 <div class="legend"><b>Deformación acumulada (LOS)</b>
  <div class="bar"></div>
  <div class="bl"><span>−{vmax:.0f} mm</span><span>0</span><span>+{vmax:.0f} mm</span></div>
- <div class="ell"><span class="sw"></span>voidage total acum.</div>
+ <div class="ell"><span class="sw"></span>voidage total acum. (elipse=trayectoria)</div>
  <div class="ell"><span class="sw oil"></span>parte petróleo</div>
+ <div class="ell"><span class="sw boca"></span>pozo solo-boca (s/trayect.)</div>
 </div>
 <div class="panel">
  <div><button id="play">▶</button> &nbsp;<b>Bandurria Sur</b> · <span id="date"></span></div>
@@ -211,29 +219,31 @@ L.tileLayer('https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/
 const layers=FR.map(f=>L.imageOverlay('data:image/png;base64,'+f.png,B,{{opacity:0}}).addTo(map));
 const CONC={conc};
 if(CONC) L.geoJSON(CONC,{{style:{{fill:false,color:'#fff',weight:1.4,opacity:0.8,dashArray:'4 3'}}}}).addTo(map);
-// trayectorias (estáticas)
-WELLS.forEach(p=>L.polyline(p.traj,{{color:'#222',weight:1,opacity:0.5}}).addTo(map));
+// trayectorias (estáticas, solo pozos con rama)
+WELLS.forEach(p=>{{if(p.traj) L.polyline(p.traj,{{color:'#222',weight:1,opacity:0.5}}).addTo(map);}});
 const ellGrp=L.layerGroup().addTo(map);
 const M_LAT=111320;
-function ellipse(lat,lon,angDeg,a_m,fill){{
+function shape(lat,lon,angDeg,a_m,aspect,fill,boca){{
   if(a_m<25) return null;
-  const b_m=a_m/ASPECT, th=angDeg*Math.PI/180, mlon=M_LAT*Math.cos(lat*Math.PI/180);
+  const b_m=a_m/aspect, th=angDeg*Math.PI/180, mlon=M_LAT*Math.cos(lat*Math.PI/180);
   const pts=[];
   for(let i=0;i<=28;i++){{const t=2*Math.PI*i/28;
     const dx=(a_m/2)*Math.cos(t), dy=(b_m/2)*Math.sin(t);
     const rx=dx*Math.cos(th)-dy*Math.sin(th), ry=dx*Math.sin(th)+dy*Math.cos(th);
     pts.push([lat+ry/M_LAT, lon+rx/mlon]);}}
-  return L.polygon(pts, fill
-    ?{{stroke:false,fillColor:'#141414',fillOpacity:0.45}}
+  if(fill) return L.polygon(pts,{{stroke:false,fillColor:'#141414',fillOpacity:0.45}});
+  return L.polygon(pts, boca
+    ?{{color:'#1f4eb4',weight:1.1,dashArray:'3 2',fill:false,opacity:0.9}}
     :{{color:'#111',weight:1,fill:false,opacity:0.9}});
 }}
 function drawEll(i){{
   ellGrp.clearLayers();
   WELLS.forEach(p=>{{
+    const asp=p.ht?ASPECT:1.0, boca=!p.ht;
     const at=AMAX*Math.sqrt(Math.max(p.ct[i],0)/CTMAX);
     const ao=AMAX*Math.sqrt(Math.max(p.co[i],0)/CTMAX);
-    const e1=ellipse(p.lat,p.lon,p.ang,at,false); if(e1)e1.addTo(ellGrp);
-    const e2=ellipse(p.lat,p.lon,p.ang,ao,true); if(e2)e2.addTo(ellGrp);
+    const e1=shape(p.lat,p.lon,p.ang,at,asp,false,boca); if(e1)e1.addTo(ellGrp);
+    const e2=shape(p.lat,p.lon,p.ang,ao,asp,true,boca); if(e2)e2.addTo(ellGrp);
   }});
 }}
 const sl=document.getElementById('sl'), dt=document.getElementById('date');

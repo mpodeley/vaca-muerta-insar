@@ -12,11 +12,18 @@ Seis instantáneas entre 2019 y 2026. En cada panel:
 
 - **Fondo:** desplazamiento LOS **acumulado** a esa fecha (azul = estable/uplift, rojo = subsidencia),
   con la misma escala de color en todos los paneles (referencia ene-2019).
-- **Líneas:** las **115 trayectorias horizontales** del bloque.
-- **Elipse** (orientada a lo largo del lateral de cada pozo): **anillo negro** = voidage de reservorio
-  **total** acumulado hasta esa fecha; **relleno** = la parte que es **petróleo** (Np·Bo). Ambos en la
-  **misma escala volumétrica** (rm³), así el anillo visible alrededor del relleno es el aporte de
-  **agua + gas** de reservorio.
+- **Elipse** (orientada a lo largo del lateral): pozo **con trayectoria** (115 de los 220 del bloque),
+  en el centroide de la rama. **Círculo punteado azul**: pozo **solo-boca** (105 pozos, casi todos de
+  2024–2025, todavía sin geometría de rama cargada en el dataset público), en la boca.
+- En ambos: **anillo** = voidage de reservorio **total** acumulado hasta esa fecha; **relleno** = la
+  parte que es **petróleo** (Np·Bo). Misma escala volumétrica (rm³), así el anillo visible es el aporte
+  de **agua + gas** de reservorio.
+
+!!! note "Por qué importan los pozos solo-boca"
+    El dataset público de **trayectorias corta en nov-2023**. Si se omiten esos 105 pozos, en **2025 se
+    pierde el 55 %** de la producción de petróleo del bloque (65 % en 2026): se vería el cuenco de
+    subsidencia profundizarse **sin pozos encima**. Por eso se incluyen en la boca (menor precisión
+    posicional —el pad está en el *heel*, no sobre la rama— pero presencia correcta).
 
 ![Bandurria Sur — voidage por pozo (elipse) vs subsidencia InSAR, 6 timesteps + panel temporal](assets/bsur_timesteps.png){ loading=lazy }
 
@@ -43,23 +50,23 @@ producción↔subsidencia, cuadro a cuadro.
 El panel de abajo descompone el **voidage acumulado del bloque** (áreas apiladas, en Mm³ de reservorio)
 y lo superpone con la **subsidencia mediana sobre los pozos** (línea roja, eje derecho):
 
-| Componente (acum. 2026) | Mm³ reservorio |
+| Componente (acum. 2026, 220 pozos) | Mm³ reservorio |
 |---|---|
-| Petróleo (Np·Bo) | **13.5** |
-| Agua (Wp·Bw) | 3.96 |
-| Gas (Gp·Bg) | 5.95 |
-| **Voidage bruto** | **23.4** |
-| Subsidencia mediana de los pozos | **−85 mm** |
+| Petróleo (Np·Bo) | **17.9** |
+| Agua (Wp·Bw) | 5.6 |
+| Gas (Gp·Bg) | 8.2 |
+| **Voidage bruto** | **31.8** |
+| Subsidencia mediana de los pozos | **−86 mm** |
 
 El petróleo es la mayor componente del voidage, y la curva de subsidencia **se despega justo cuando
 despega el voidage** (~2022) — el mismo acople producción↔compactación de la página por pozo, ahora
 resuelto en el tiempo y sobre un bloque concreto.
 
 !!! warning "Caveats"
-    - **El "voidage neto" del panel ≈ al bruto** porque los **inyectores de Bandurria Sur no tienen
-      trayectoria** y quedan fuera de este set de 115 productores: el neto graficado **no** resta la
-      inyección de agua del bloque (que existe, en pozos inyectores aparte). Es voidage de **producción**,
-      no balance de bloque.
+    - **Pozos solo-boca:** 105 de los 220 se ubican en la **boca** (sin trayectoria pública); su elipse
+      es un **círculo** sin orientación y posicionado en el pad, no sobre la rama drenada.
+    - El voidage del panel es de **producción** (no resta la inyección de agua del bloque, que ocurre en
+      pozos inyectores aparte).
     - **FVF aproximados** (Bo≈1.4, Bw≈1.03, Bg≈0.0035 rm³/sm³): valen para comparación relativa, no como
       balance volumétrico exacto.
     - **Correlación, no causalidad**; el voidage es colineal con la producción.

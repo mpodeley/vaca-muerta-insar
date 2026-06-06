@@ -13,7 +13,7 @@ import requests
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 PROD_URLS = json.load(open(DATA / "prod_urls.json"))
-WELLS = set(int(k) for k in json.load(open(DATA / "bsur_wells.json")))
+WELLS = set(int(k) for k in json.load(open(DATA / "bsur_wells_all.json")))
 HDRS = {"User-Agent": "Mozilla/5.0"}
 csv.field_size_limit(1 << 24)
 FLD = ["prod_pet", "prod_gas", "prod_agua", "iny_agua"]
@@ -55,7 +55,7 @@ def main() -> None:
                 hit += 1
         print(f"  {y}: {n:,} filas  (registros Bandurria Sur acum={hit:,} este año)", flush=True)
 
-    out = DATA / "bsur_monthly_perwell.csv"
+    out = DATA / "bsur_monthly_perwell_all.csv"
     with open(out, "w", newline="") as f:
         w = csv.writer(f)
         w.writerow(["idpozo", "ym", *FLD])
