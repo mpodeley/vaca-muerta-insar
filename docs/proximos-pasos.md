@@ -16,8 +16,10 @@ El piloto responde la pregunta de viabilidad. Para convertirlo en algo robusto:
 
 - **Sentinel-2 (NDVI).** ✓ Hecho — la subsidencia fuerte **no** coincide con parcelas regadas (NDVI 0,11
   vs 0,12 de la zona estable; ver [Interpretación](interpretacion.md)). Descarta el riego superficial.
-- **Cruzar con hidrología.** Pendiente y decisivo: superponer la serie de subsidencia con **niveles
-  freáticos** (AIC / DPRH) y con **humedad de suelo** (ERA5-Land/SMAP) para cerrar la hipótesis de agua.
+- **Cruzar con hidrología.** Decisivo pero **bloqueado por disponibilidad de datos**: no hay serie
+  piezométrica pública del valle de Añelo (los repositorios abiertos —SNIH/BDHI, AIC, Datos Abiertos
+  Neuquén— solo tienen agua de superficie). Requiere **datos institucionales** (DPRH Neuquén / AIC, por
+  pedido) o piezómetros de campo para superponer la freática con la serie de subsidencia.
 - **Geología (SEGEMAR).** Distinguir compactación de aluvión de subsidencia por bombeo.
 
 ## Contexto y comunicación

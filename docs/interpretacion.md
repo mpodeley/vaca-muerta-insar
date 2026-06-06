@@ -67,8 +67,10 @@ vegetado: lo opuesto a lo que esperaríamos del riego. Esto **refuerza** que el 
 
 !!! note "Qué deja abierto"
     NDVI mide vegetación, no nivel freático. El test descarta el **riego superficial** como explicación
-    del grueso de la subsidencia, pero **no** la dinámica de la **freática del valle**, que requiere los
-    datos hidrológicos (AIC/DPRH) — el próximo cruce pendiente.
+    del grueso de la subsidencia, pero **no** la dinámica de la **freática del valle**. Ese cruce sería
+    decisivo, pero **no hay serie piezométrica pública** para el valle de Añelo: los repositorios abiertos
+    (nacional **SNIH/BDHI**, **AIC**, Datos Abiertos Neuquén) solo tienen **agua de superficie**. Cerrarlo
+    requiere **datos institucionales** (DPRH Neuquén / AIC, por pedido) o piezómetros de campo.
 
 ## Cómo confirmarlo: fuentes para cruzar
 
@@ -76,7 +78,7 @@ vegetado: lo opuesto a lo que esperaríamos del riego. Esto **refuerza** que el 
 |---|---|
 | ¿Coincide con parcelas regadas? | **Sentinel-2 (NDVI)** — ✓ hecho: **no coincide** (ver arriba) |
 | ¿Es estacional con el riego? | **ERA5-Land / SMAP** (humedad de suelo) + precipitación |
-| ¿Baja la freática donde se hunde? | **AIC** (cuencas Limay-Neuquén-Negro), **DPRH Neuquén**, **DPA Río Negro** |
+| ¿Baja la freática donde se hunde? | **DPRH Neuquén** / **AIC** / **DPA Río Negro** — ⚠ no son datos abiertos: requieren pedido institucional |
 | ¿Niveles de acuíferos? | `energianeuquen.gob.ar` (datos de pozos) |
 | ¿Aluvión vs roca? | **SEGEMAR** (geología) |
 | Verdad de campo | **GNSS** continuo (no hay puntos cercanos → instalar = próximo paso) |
