@@ -60,6 +60,31 @@ Mann-Whitney p≈10⁻³⁴): la inyección, donde ocurre, compensa la compactac
 
 ![Extracción VM (predice) vs voidage volumétrico (no) — por pozo](assets/voidage_scatter.png){ loading=lazy }
 
+## ¿Y la geomecánica fina? Tres mecanismos, una sola señal
+
+La física de reservorios sugiere mecanismos que *competirían* con la depleción y que podrían empujar
+hacia **uplift**:
+
+- **Hidratación de la lutita.** El Vaca Muerta es roca madre subsaturada en agua; al fracturar embebe
+  gran parte del fluido (bajo *flowback*, documentado incluso como EOR por imbibición). Eso podría
+  **hinchar** las arcillas (heave) o, al revés, **ablandar** la matriz y favorecer compactación.
+- **Inflación poroelástica** por inyección activa de agua (sumideros en horizontes permeables).
+
+Los pusimos a prueba (regresión múltiple controlando por depleción + campos espaciales). El resultado
+es claro: **domina la depleción, y los mecanismos secundarios no se aíslan** con InSAR y datos públicos.
+
+![Tres mecanismos vs subsidencia](assets/geomecanica_campos.png){ loading=lazy }
+
+- El campo de **agua de fractura** es casi idéntico al de **extracción** (los pozos que más se fracturan
+  son los que más producen): no se puede separar un efecto propio. Controlando por extracción, su efecto
+  neto sobre la velocidad es **≈ 0**.
+- La **inyección** no coincide espacialmente con el uplift; entre inyectores, *más* inyección va con
+  *más* subsidencia (se co-localiza con producción intensa que la enmascara).
+
+Es un resultado honesto del experimento: con datos abiertos se ve la **señal de primer orden**
+(extracción → depleción de presión → compactación), pero separar los efectos geomecánicos finos
+requeriría datos que no son públicos (presiones, PVT, series por pozo, GNSS de calibración).
+
 !!! warning "Caveats"
     - **Voidage aproximado.** Los FVF son constantes de literatura (varían por ventana de fluido y
       presión); sirven para comparación **relativa/espacial**, no como balance volumétrico exacto.
