@@ -25,6 +25,19 @@ plano. A medida que entran pozos y el voidage crece, **el cuenco rojo se forma y
 donde se concentran las elipses más grandes** (racimo del sureste), llegando a **≈ −118 mm** acumulados.
 La subsidencia es **focalizada en el racimo denso**, no bajo los pocos pozos aislados del noroeste.
 
+## Deformación acumulada en el tiempo (slider)
+
+La misma idea, **interactiva**: arrastrá el slider (o tocá ▶) y mirá crecer juntos el cuenco de
+subsidencia (rojo) y el voidage de cada pozo. El **anillo** de cada elipse es el voidage de reservorio
+total acumulado hasta esa fecha; el **relleno** es la parte que es petróleo. Las trayectorias son las
+líneas oscuras; el contorno punteado es el bloque.
+
+<iframe src="../assets/demo_bsur_slider.html" width="100%" height="600" style="border:1px solid #ccc;border-radius:6px"></iframe>
+
+Hasta ~2021 las elipses son mínimas y el fondo está neutro; desde 2022 las elipses se inflan en el
+racimo del sureste y el rojo aparece y se profundiza **bajo ese mismo racimo** — el acople
+producción↔subsidencia, cuadro a cuadro.
+
 ## El acople en números (panel inferior)
 
 El panel de abajo descompone el **voidage acumulado del bloque** (áreas apiladas, en Mm³ de reservorio)
