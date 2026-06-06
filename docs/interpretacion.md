@@ -51,11 +51,30 @@ El carácter **acumulativo de 7 años** (no reversible) es **más consistente co
     - La gran demanda de agua del fracking es mayormente de **agua superficial** del río, que por sí
       sola no explicaría una subsidencia del lecho — habría que mirar la **freática** del valle.
 
+### El test con NDVI: el riego no lo explica
+
+Hicimos el primer cruce de esa lista: comparar las cubetas de subsidencia con un **mapa de NDVI de
+Sentinel-2** (vegetación de verano, mediana de ~630 escenas sin nubes vía Microsoft Planetary Computer).
+Si la subsidencia cayera sobre **parcelas regadas**, esos pixeles tendrían NDVI alto.
+
+![NDVI de verano vs velocidad de deformación](assets/ndvi_vs_subsidencia.png){ loading=lazy }
+
+El resultado **no apoya la hipótesis de riego** a nivel agregado: sobre **8,8 millones** de pixeles, la
+zona de subsidencia fuerte tiene NDVI mediano **0,11**, *menor* que la zona estable (**0,12**) — ambas
+son estepa árida (las parcelas regadas estarían en NDVI > 0,4). Si acaso, lo subsidente está **menos**
+vegetado: lo opuesto a lo que esperaríamos del riego. Esto **refuerza** que el driver dominante es
+**producción / reservorio**, no agua de riego.
+
+!!! note "Qué deja abierto"
+    NDVI mide vegetación, no nivel freático. El test descarta el **riego superficial** como explicación
+    del grueso de la subsidencia, pero **no** la dinámica de la **freática del valle**, que requiere los
+    datos hidrológicos (AIC/DPRH) — el próximo cruce pendiente.
+
 ## Cómo confirmarlo: fuentes para cruzar
 
 | Pregunta | Fuente |
 |---|---|
-| ¿Coincide con parcelas regadas? | **Sentinel-2 (NDVI)** — uso de suelo / agricultura |
+| ¿Coincide con parcelas regadas? | **Sentinel-2 (NDVI)** — ✓ hecho: **no coincide** (ver arriba) |
 | ¿Es estacional con el riego? | **ERA5-Land / SMAP** (humedad de suelo) + precipitación |
 | ¿Baja la freática donde se hunde? | **AIC** (cuencas Limay-Neuquén-Negro), **DPRH Neuquén**, **DPA Río Negro** |
 | ¿Niveles de acuíferos? | `energianeuquen.gob.ar` (datos de pozos) |

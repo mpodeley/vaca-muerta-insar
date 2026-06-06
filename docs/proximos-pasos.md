@@ -14,9 +14,10 @@ El piloto responde la pregunta de viabilidad. Para convertirlo en algo robusto:
 
 ## Confirmar la interpretación
 
-- **Cruzar con hidrología.** Superponer la serie de subsidencia con **niveles freáticos** (AIC / DPRH)
-  y con **humedad de suelo** (ERA5-Land/SMAP) para separar extracción de agua vs artefacto estacional.
-- **Sentinel-2 (NDVI).** Verificar si la subsidencia coincide con **parcelas bajo riego**.
+- **Sentinel-2 (NDVI).** ✓ Hecho — la subsidencia fuerte **no** coincide con parcelas regadas (NDVI 0,11
+  vs 0,12 de la zona estable; ver [Interpretación](interpretacion.md)). Descarta el riego superficial.
+- **Cruzar con hidrología.** Pendiente y decisivo: superponer la serie de subsidencia con **niveles
+  freáticos** (AIC / DPRH) y con **humedad de suelo** (ERA5-Land/SMAP) para cerrar la hipótesis de agua.
 - **Geología (SEGEMAR).** Distinguir compactación de aluvión de subsidencia por bombeo.
 
 ## Contexto y comunicación

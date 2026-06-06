@@ -39,9 +39,12 @@ Ver [Producción vs subsidencia](produccion.md).
 - **[Producción vs subsidencia](produccion.md)** — cruce con la producción por concesión, el caso
   Bandurria (inyección vs extracción) y la descomposición vertical.
 - **[Sismicidad](sismicidad.md)** — sismos corticales sobre el mapa de deformación (catálogo ISC/INPRES).
+- **[Preprint (PDF)](preprint.md)** — todo esto resumido en formato paper (inglés).
 - **[Próximos pasos](proximos-pasos.md)** y **[Referencias](referencias.md)**.
 
 !!! note "Honestidad metodológica"
     InSAR mide **correlación espacio-temporal**, no causalidad. Este es un piloto de viabilidad con
     datos gratuitos sobre ~7 años y **una sola línea de vista** (track ascendente); no reemplaza un
     estudio con validación de campo (GNSS) ni distingue por sí solo el mecanismo de la deformación.
+    Se usó **Claude (Anthropic)** para asistir en el procesamiento, el análisis y la redacción; los
+    resultados y conclusiones fueron revisados por el autor.
