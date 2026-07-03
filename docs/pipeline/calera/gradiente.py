@@ -100,11 +100,15 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--src", default=str(HERE / "mintpy_int40"))
     ap.add_argument("--suffix", default="")
-    ap.add_argument("--pctl", type=float, default=97.0)
+    ap.add_argument("--pctl", type=float, default=96.0)
     ap.add_argument("--min-px", type=int, default=10)
     ap.add_argument("--min-elong", type=float, default=3.0)
-    ap.add_argument("--min-km", type=float, default=0.6,
-                    help="largo mínimo del lineamiento [km]")
+    ap.add_argument("--min-km", type=float, default=0.8,
+                    help="largo mínimo del lineamiento [km] (tras encadenar)")
+    ap.add_argument("--gap-km", type=float, default=3.5,
+                    help="encadenar segmentos colineales separados hasta este gap")
+    ap.add_argument("--az-tol", type=float, default=25.0,
+                    help="tolerancia de azimut para encadenar [deg]")
     ap.add_argument("--buffer-km", type=float, default=2.5,
                     help="candidatos con centroide a menos de esto del bloque")
     args = ap.parse_args()
@@ -150,22 +154,80 @@ def main() -> None:
     tr_deg = args.buffer_km / 111.0   # buffer aproximado en grados
     poly_buf = poly_blk.buffer(tr_deg)
 
-    feats = []
-    for k, path in enumerate(sorted(skeleton_paths(sk), key=len, reverse=True)):
+    def azim(xs, ys):
+        dxy = np.column_stack([xs - xs.mean(), ys - ys.mean()])
+        _, _, vt = np.linalg.svd(dxy, full_matrices=False)
+        return (np.degrees(np.arctan2(vt[0][0], vt[0][1])) + 360) % 180  # geográfico 0-180
+
+    def az_diff(a, b):
+        d = abs(a - b) % 180
+        return min(d, 180 - d)
+
+    # segmentos crudos en UTM (se descartan migas < 0.25 km)
+    segs = []
+    for path in skeleton_paths(sk):
         ll, xs, ys = rc2ll(path)
+        L = np.hypot(np.diff(xs), np.diff(ys)).sum() / 1000.0
+        if L < 0.25:
+            continue
+        segs.append(dict(xs=np.asarray(xs), ys=np.asarray(ys), path=list(path)))
+
+    # ENCADENAMIENTO: une segmentos colineales (mismo rumbo ± az-tol) con extremos
+    # a < gap-km — un lineamiento largo suele salir fragmentado del esqueleto
+    def try_merge(a, b):
+        if az_diff(azim(a["xs"], a["ys"]), azim(b["xs"], b["ys"])) > args.az_tol:
+            return None
+        ends_a = [(a["xs"][0], a["ys"][0], 0), (a["xs"][-1], a["ys"][-1], -1)]
+        ends_b = [(b["xs"][0], b["ys"][0], 0), (b["xs"][-1], b["ys"][-1], -1)]
+        best = min(((np.hypot(xa - xb, ya - yb), ia, ib)
+                    for xa, ya, ia in ends_a for xb, yb, ib in ends_b),
+                   key=lambda t: t[0])
+        d, ia, ib = best
+        if d > args.gap_km * 1000:
+            return None
+        # el puente también tiene que ser colineal (no unir paralelas desplazadas)
+        xa, ya, _ = ends_a[0 if ia == 0 else 1]; xb, yb, _ = ends_b[0 if ib == 0 else 1]
+        az_bridge = (np.degrees(np.arctan2(xb - xa, yb - ya)) + 360) % 180
+        if az_diff(az_bridge, azim(a["xs"], a["ys"])) > args.az_tol + 10:
+            return None
+        xs_a = a["xs"] if ia == -1 else a["xs"][::-1]
+        ys_a = a["ys"] if ia == -1 else a["ys"][::-1]
+        xs_b = b["xs"] if ib == 0 else b["xs"][::-1]
+        ys_b = b["ys"] if ib == 0 else b["ys"][::-1]
+        return dict(xs=np.concatenate([xs_a, xs_b]), ys=np.concatenate([ys_a, ys_b]),
+                    path=a["path"] + b["path"])
+
+    merged = True
+    while merged:
+        merged = False
+        for i in range(len(segs)):
+            for j in range(i + 1, len(segs)):
+                m = try_merge(segs[i], segs[j])
+                if m is not None:
+                    segs[i] = m
+                    del segs[j]
+                    merged = True
+                    break
+            if merged:
+                break
+
+    tr_ll = Transformer.from_crs(f"EPSG:{g['epsg']}", "EPSG:4326", always_xy=True)
+    feats = []
+    for s in sorted(segs, key=lambda s: -len(s["xs"])):
+        xs, ys = s["xs"], s["ys"]
         seg = np.hypot(np.diff(xs), np.diff(ys)).sum() / 1000.0  # km
         if seg < args.min_km:
             continue
-        lon_c = float(np.mean([p[0] for p in ll])); lat_c = float(np.mean([p[1] for p in ll]))
+        lons, lats = tr_ll.transform(xs, ys)
+        lon_c, lat_c = float(np.mean(lons)), float(np.mean(lats))
         if not poly_buf.contains(Point(lon_c, lat_c)):
             continue
-        dxy = np.column_stack([xs - xs.mean(), ys - ys.mean()])
-        _, _, vt = np.linalg.svd(dxy, full_matrices=False)
-        az = (np.degrees(np.arctan2(vt[0][0], vt[0][1])) + 360) % 180  # azimut geográfico 0-180
-        gmed = float(np.nanmedian([grad[r, c] for r, c in path]))
+        az = azim(xs, ys)
+        gmed = float(np.nanmedian([grad[r, c] for r, c in s["path"]]))
         feats.append({"type": "Feature",
                       "geometry": {"type": "LineString",
-                                   "coordinates": [[round(x, 6), round(y, 6)] for x, y in ll]},
+                                   "coordinates": [[round(x, 6), round(y, 6)]
+                                                   for x, y in zip(lons, lats)]},
                       "properties": {"id": len(feats) + 1, "azimut_deg": round(az, 1),
                                      "grad_mmyr_km": round(gmed, 2), "largo_km": round(seg, 2)}})
     out_gj = DATA / f"grad_candidates{args.suffix}.geojson"

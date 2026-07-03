@@ -22,7 +22,7 @@ mediana 1,7 mm/año) y con el *deramp* validado (el centro del cuenco cambia <7 
 La herramienta central es el **gradiente espacial** de la velocidad, |∇v| en mm/año/km: donde el
 hundimiento cambia bruscamente de un píxel al siguiente, el gradiente se enciende. Sobre el mapa de
 |∇v| buscamos **lineamientos** (crestas elongadas de alto gradiente) de forma automática: umbral en el
-percentil 97, componentes elongadas, y esqueleto vectorizado.
+percentil 96, componentes elongadas, esqueleto vectorizado y encadenamiento de segmentos colineales.
 
 ![La Calera — velocidad LOS y desplazamiento acumulado](assets/calera_velocity.png){ loading=lazy }
 
@@ -30,12 +30,18 @@ percentil 97, componentes elongadas, y esqueleto vectorizado.
 
 La **curvatura** (tercer panel) ayuda a clasificar: una **flexura** aparece como una banda de curvatura
 de un solo signo (la "rodilla" del cuenco); una **falla** produce un **dipolo ±** apretado a ambos
-lados de la cresta de gradiente. Tras filtrar bordes, segmentos cortos (<0,6 km) y candidatos lejos
-del bloque, sobreviven **tres lineamientos** — y forman una **familia coherente NNE** (azimuts 11°,
-23° y 30°): **L1** de 2,1 km en el borde norte del cuenco, **L2** (1,1 km) y **L3** (0,8 km). Un dato
-sugestivo: ese rumbo es aproximadamente **paralelo a las filas de laterales** (los pozos navegan ~N-S,
-perpendiculares a la fractura hidráulica ~E-O), lo que apunta a discontinuidades **acopladas a la
-geometría del desarrollo** (borde del frente de compactación) más que a estructura regional heredada.
+lados de la cresta de gradiente. Los lineamientos crudos salen **fragmentados** del esqueleto, así que
+el detector **encadena segmentos colineales**: une tramos de rumbo compatible (±25°) cuyo puente
+también es colineal, con gaps de hasta ~3,5 km. La colinealidad es la clave — dos tramos paralelos
+pero desplazados lateralmente (en échelon) **no** se unen.
+
+El resultado son **ocho lineamientos**, dominados por una **familia NE (azimuts 36–61°)** que forma un
+verdadero corredor estructural: **L1, de 8,5 km**, recorre el **flanco este del bloque** — justo donde
+termina el campo de pozos —, con un cluster **en échelon** al norte (L2 de 2,3 km + L5 de 1,4 km,
+paralelos, desplazados ~1 km) y pares menores (L6, L7). Un dato sugestivo: el corredor NE es
+aproximadamente paralelo al borde oriental del desarrollo, lo que apunta a discontinuidades
+**acopladas a la geometría del frente de compactación**; que además haya segmentos angostos en échelon
+es el patrón que se espera si esa flexión está **reactivando planos preexistentes** de ese rumbo.
 
 !!! note "El detector, validado antes de usarlo"
     Antes de creerle al método lo probamos contra sintéticos con **ruido real** de una zona quieta de
@@ -47,21 +53,29 @@ geometría del desarrollo** (borde del frente de compactación) más que a estru
 
 ## Transectas: ¿escalón o pendiente?
 
-Sobre cada lineamiento candidato trazamos un perfil perpendicular de 4 km y ajustamos dos modelos en
-competencia: una superficie **suave** (cuadrática) y la misma cuadrática **más un escalón** de ancho
-finito (función error). Si el escalón gana por margen claro (ΔBIC > 10) y su salto supera 3 veces el
-ruido local, lo declaramos discontinuidad. El **ancho** del escalón clasifica: ≲120 m (2–3 píxeles) es
-compatible con una **falla** aflorante o somera; 300–1000 m es una **flexura**.
+Sobre cada lineamiento trazamos perfiles perpendiculares de 4 km — **tres** por lineamiento cuando
+supera los 2 km (al 25/50/75 % del recorrido), para ver si el escalón **persiste a lo largo del
+rumbo** — y ajustamos dos modelos en competencia: una superficie **suave** (cuadrática) y la misma
+cuadrática **más un escalón** de ancho finito (función error). Si el escalón gana por margen claro
+(ΔBIC > 10) y su salto supera 3 veces el ruido local, lo declaramos discontinuidad. El **ancho** del
+escalón clasifica: ≲120 m (2–3 píxeles) es compatible con una **falla** aflorante o somera; 300–1000 m
+es una **flexura**.
 
 ![La Calera — transectas y detección de escalones](assets/calera_transectas.png){ loading=lazy }
 
-El veredicto por lineamiento:
+El veredicto, por estructura:
 
-| Lineamiento | Largo | Azimut | Salto | Ancho | Clase |
-|---|---|---|---|---|---|
-| **L1** | 2,1 km | 11° | +3,5 mm/año | 500 m | **flexura** (la rodilla del cuenco) |
-| **L2** | 1,1 km | 30° | −1,1 mm/año | 120 m | **candidata a falla** |
-| **L3** | 0,8 km | 23° | −1,7 mm/año | 120 m | **candidata a falla** |
+| Estructura | Largo | Azimut | Transectas | Veredicto |
+|---|---|---|---|---|
+| **L1** (flanco este) | **8,5 km** | 39° | +23,6 / −3,0 / +11,2 mm/año, w 500–1200 m | **flexura** que persiste a lo largo del rumbo, más marcada hacia los extremos |
+| **L2** (cluster norte) | 2,3 km | 40° | −1,6 (**w=120 m**) / −3,5 / −3,3 mm/año | flexura con un tramo **clase falla** en su extremo NE |
+| **L5** (en échelon con L2) | 1,4 km | 43° | −7,5 mm/año, w=500 m | flexura |
+| **L6** (centro) | 1,0 km | 111° | −1,1 mm/año, **w=80 m** | **candidata a falla** |
+| L3, L4, L7, L8 | 0,9–4,3 km | 1–150° | ΔBIC 27–308 | flexuras / indef. |
+
+La lectura de conjunto: el hundimiento de La Calera **no termina en una rampa suave** — su flanco
+oriental es una flexura continua de escala kilométrica, y dentro del corredor NE hay al menos **dos
+tramos angostos (80–120 m) compatibles con fallas** que acomodan parte del movimiento diferencial.
 
 ## La prueba temporal: d(t) = B − A
 
@@ -73,13 +87,16 @@ gris, la producción acumulada del bloque.
 
 ![La Calera — series diferenciales a través de cada escalón](assets/calera_pares_diferenciales.png){ loading=lazy }
 
-Los tres pasan la prueba, cada uno con su historia:
+Las series pasan la prueba, y cuentan historias distintas:
 
-- **L1 (flexura):** el diferencial crece **+8 mm entre 2020 y 2023 y después se estabiliza** — la
-  rodilla del cuenco se formó con la primera ola de desarrollo y llegó a un equilibrio.
-- **L2 y L3 (candidatas a falla):** caída **monótona de −10 y −12 mm** en 2020–2026, que se empina
-  cuando la producción acelera (2024+). Movimiento diferencial sostenido y acoplado al bloque — no es
-  atmósfera.
+- **El corredor norte (L2a/b/c, L5):** caída **monótona de −7 a −11 mm** en 2020–2026, que se empina
+  cuando la producción acelera (2024+) — incluido el tramo clase falla L2a. Movimiento diferencial
+  sostenido y acoplado al bloque; no es atmósfera.
+- **El flanco este (L1):** el diferencial de L1b está **plano hasta 2023 y recién ahí empieza a caer**
+  (−6 mm a 2026) — la flexura oriental se "enciende" cuando el desarrollo se expande hacia el este.
+  En L1c el contraste crece **+8 mm** de forma continua: el lado externo queda cada vez más arriba.
+- **L6 (candidata a falla, centro):** −11 mm sostenidos, con dos terminaciones a <2 km (líneas azules)
+  en el camino.
 
 ## Mapa interactivo
 

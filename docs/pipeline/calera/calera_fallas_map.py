@@ -132,7 +132,7 @@ def main() -> None:
 
         for ft in cands:
             p = ft["properties"]
-            row = steps[steps.lid == p["id"]]
+            row = steps[steps.lid == p["id"]].sort_values("dbic", ascending=False)
             cc = ft["geometry"]["coordinates"]
             xs, ys = tr_fw.transform([q[0] for q in cc], [q[1] for q in cc])
             cx, cy = float(np.mean(xs)), float(np.mean(ys))

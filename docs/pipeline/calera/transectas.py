@@ -110,11 +110,27 @@ def main() -> None:
     for f in cands:
         cc = f["geometry"]["coordinates"]
         xs, ys = tr_fw.transform([p[0] for p in cc], [p[1] for p in cc])
-        cx, cy = float(np.mean(xs)), float(np.mean(ys))
-        az = np.radians(f["properties"]["azimut_deg"] + 90.0)   # perpendicular
-        dx, dy = np.sin(az) * 2000, np.cos(az) * 2000            # 4 km centrada
-        tset.append((f"L{f['properties']['id']} ⊥", cx - dx, cy - dy, cx + dx, cy + dy,
-                     f["properties"]["id"]))
+        xs, ys = np.asarray(xs), np.asarray(ys)
+        arco = np.concatenate([[0], np.cumsum(np.hypot(np.diff(xs), np.diff(ys)))])
+        largo = f["properties"]["largo_km"]
+        # lineamientos largos: 3 perpendiculares (25/50/75 % del arco) para ver si
+        # el escalón persiste a lo largo del rumbo; cortos: solo el centro
+        fracs = [(0.25, "a"), (0.5, "b"), (0.75, "c")] if largo >= 2.0 else [(0.5, "")]
+        for fr, sub in fracs:
+            s0 = fr * arco[-1]
+            i = int(np.searchsorted(arco, s0))
+            i = min(max(i, 0), len(xs) - 1)
+            cx, cy = float(xs[i]), float(ys[i])
+            # azimut local: PCA de los vértices a < 700 m de arco del punto
+            cerca = np.abs(arco - s0) < 700
+            lx, ly = (xs[cerca], ys[cerca]) if cerca.sum() >= 3 else (xs, ys)
+            dxy = np.column_stack([lx - lx.mean(), ly - ly.mean()])
+            _, _, vt = np.linalg.svd(dxy, full_matrices=False)
+            az_loc = (np.degrees(np.arctan2(vt[0][0], vt[0][1])) + 360) % 180
+            az = np.radians(az_loc + 90.0)                       # perpendicular
+            dx, dy = np.sin(az) * 2000, np.cos(az) * 2000        # 4 km centrada
+            tset.append((f"L{f['properties']['id']}{sub} ⊥", cx - dx, cy - dy,
+                         cx + dx, cy + dy, f["properties"]["id"]))
 
     rows_csv, fits = [], []
     for name, xa, ya, xb, yb, lid in tset:
