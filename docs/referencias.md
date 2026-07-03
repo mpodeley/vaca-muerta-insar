@@ -7,6 +7,31 @@
 - **[Cigna 2021]** Cigna, Esquivel Ramírez & Tapete (2021), *Remote Sensing* 13(23):4800 — validación de
   Sentinel-1 PSI/SBAS contra GNSS. [mdpi.com](https://www.mdpi.com/2072-4292/13/23/4800)
 
+## Detección de fallas y flexuras en superficie con InSAR
+
+- **[Amelung 1999]** Amelung, Galloway, Bell, Zebker & Laczniak (1999), *Geology* 27(6) — "Sensing the
+  ups and downs of Las Vegas": el clásico del método — las **fallas cuaternarias actúan de borde** de los
+  cuencos de subsidencia (bombeo de acuífero) y aparecen como **discontinuidades del interferograma**.
+  [doi:10.1130/0091-7613(1999)027<0483:STUADO>2.3.CO;2](https://doi.org/10.1130/0091-7613(1999)027%3C0483:STUADO%3E2.3.CO;2)
+- **[Fielding 1998]** Fielding, Blom & Goldstein (1998), *GRL* 25(17) — subsidencia rápida sobre
+  campos petroleros (Lost Hills/Belridge, California) medida con InSAR.
+  [doi:10.1029/98GL01821](https://doi.org/10.1029/98GL01821)
+- **[Bawden 2001]** Bawden, Thatcher, Stein, Hudnut & Peltzer (2001), *Nature* 412 — Los Ángeles:
+  separar deformación antrópica de tectónica; las fallas **compartimentan** el campo de deformación.
+  [doi:10.1038/35088576](https://doi.org/10.1038/35088576)
+- **[Staniewicz 2020]** Staniewicz et al. (2020), *GRL* 47 — Sentinel-1 sobre 80.000 km² del **Permian
+  Basin** (análogo no convencional directo): subsidencia por extracción, uplift por inyección y
+  **zonas lineales de deformación**. [doi:10.1029/2020GL090151](https://doi.org/10.1029/2020GL090151)
+- **[Pepin 2022]** Pepin & Zebker et al. (2022), *JGR Solid Earth* — Delaware Basin: las zonas lineales
+  de subsidencia se modelan como **slip asísmico somero en fallas normales** bajo campos de oil & gas —
+  el análogo directo de lo que se busca acá. [doi:10.1029/2021JB023157](https://doi.org/10.1029/2021JB023157)
+- **[Kim 2018]** Kim & Lu (2018), *Scientific Reports* 8 — geohazards localizados (sinkholes, fallas
+  reactivadas) en West Texas asociados a actividad de O&G, con Sentinel-1A/B.
+  [doi:10.1038/s41598-018-23143-6](https://doi.org/10.1038/s41598-018-23143-6)
+- **[Chaussard 2014]** Chaussard, Wdowinski, Cabral-Cano & Amelung (2014), *Remote Sens. Environ.* 140 —
+  México central: bordes de subsidencia **controlados por fallas** que se vuelven fisuras superficiales.
+  [doi:10.1016/j.rse.2013.08.038](https://doi.org/10.1016/j.rse.2013.08.038)
+
 ## Subsidencia por extracción de agua subterránea (InSAR)
 
 - **[Fenhe 2025]** Land subsidence in the Fenhe River Basin (China), Sentinel-1: hasta 81 mm/año,
