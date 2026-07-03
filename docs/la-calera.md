@@ -98,6 +98,41 @@ Las series pasan la prueba, y cuentan historias distintas:
 - **L6 (candidata a falla, centro):** −11 mm sostenidos, con dos terminaciones a <2 km (líneas azules)
   en el camino.
 
+## Vertical y este-oeste: la descomposición con dos órbitas
+
+Todo lo anterior mide en **línea de vista** (LOS) de una sola órbita ascendente — una mezcla de
+movimiento vertical y horizontal este-oeste. Desde **agosto 2025**, el nuevo Sentinel-1C adquiere
+también la órbita **descendente** (track 10) sobre La Calera, y con las dos geometrías se puede
+**descomponer**: procesamos un stack descendente de 57 pares (mismos 40 m, misma referencia fija) y lo
+combinamos con la ventana ascendente equivalente (2025-08 → 2026-06).
+
+![La Calera — velocidad vertical y este-oeste](assets/calera_vertical.png){ loading=lazy }
+
+Dos resultados:
+
+- **La tasa vertical actual es el doble de la media histórica**: el centro del cuenco baja a
+  **≈ −38 mm/año** en esta ventana (la media 2020–2026 era −21) — la aceleración de la campaña
+  2025 vista en la componente que importa.
+- **El terreno converge horizontalmente hacia los cuencos**: al oeste del cuenco principal el suelo se
+  mueve **hacia el este** (púrpura) y al este se mueve **hacia el oeste** (naranja), con ±10 mm/año.
+  Esa contracción centrípeta es la firma clásica de la **compactación** a profundidad — el mismo
+  patrón que Pepin & Zebker modelaron en el Delaware Basin
+  ([referencias](referencias.md#deteccion-de-fallas-y-flexuras-en-superficie-con-insar)).
+
+![La Calera — perfiles descompuestos a través de los lineamientos](assets/calera_vertical_perfiles.png){ loading=lazy }
+
+A través de los lineamientos, el movimiento diferencial **no es solo vertical**: en L1 hay un escalón
+vertical angosto (≈ −12 mm/año justo en el cruce) y en L2 el salto reparte ~8 mm/año en vertical y
+~8 mm/año en este-oeste — las discontinuidades acomodan cizalla y convergencia, no solo hundimiento.
+
+!!! warning "Caveats de la descomposición"
+    - **Ventana corta** (11 meses de descendente S1C): las tasas tienen más incertidumbre que las de
+      la serie larga, y la componente este-oeste es intrínsecamente más ruidosa (±3–4 mm/año). El
+      stack descendente crece cada 12 días, así que esta sección mejora sola.
+    - El movimiento **norte-sur es invisible** para ambas órbitas (limitación geométrica de
+      Sentinel-1); la descomposición asume que es despreciable.
+    - Ventanas temporales distintas al resto de la página: acá todo es 2025-08 → 2026-06.
+
 ## Mapa interactivo
 
 Todas las capas juntas: velocidad, gradiente, laterales, estructuras SEGEMAR regionales y los

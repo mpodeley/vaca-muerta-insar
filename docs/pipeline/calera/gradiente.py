@@ -35,6 +35,7 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 WELLS = DATA / "calera_wells_all.json"
 SEGEMAR = DATA / "fallas_segemar.geojson"
+SEAMS = DATA / "burst_seams.geojson"   # costuras de empalme (burst_seams.py)
 # bloque LCA + margen (idéntico al subset de mintpy_calera.cfg)
 LON0, LAT0, LON1, LAT1 = -69.16, -38.47, -68.89, -38.16
 BLOQUE_ID = "LCA"
@@ -211,6 +212,31 @@ def main() -> None:
             if merged:
                 break
 
+    # costuras de empalme del producto multi-burst: un "lineamiento" que corre
+    # SOBRE una costura y con su mismo rumbo es artefacto de mosaico, no geología
+    seam_lines = []
+    if SEAMS.exists():
+        from shapely.geometry import LineString
+        tr_fw2 = Transformer.from_crs("EPSG:4326", f"EPSG:{g['epsg']}", always_xy=True)
+        for f in json.load(open(SEAMS))["features"]:
+            cc = f["geometry"]["coordinates"]
+            xs2, ys2 = tr_fw2.transform([p[0] for p in cc], [p[1] for p in cc])
+            ln = LineString(zip(xs2, ys2))
+            xy = np.array(ln.coords)
+            az_s = (np.degrees(np.arctan2(xy[-1, 0] - xy[0, 0], xy[-1, 1] - xy[0, 1])) + 360) % 180
+            seam_lines.append((ln, az_s))
+        print(f"costuras cargadas: {len(seam_lines)}")
+
+    def es_costura(xs, ys, az):
+        from shapely.geometry import Point as ShPoint
+        for ln, az_s in seam_lines:
+            if az_diff(az, az_s) > 12:
+                continue
+            dmed = np.median([ln.distance(ShPoint(x, y)) for x, y in zip(xs[::3], ys[::3])])
+            if dmed < 2500:   # la costura real cae en el borde del solape (~2 km de la línea media)
+                return True
+        return False
+
     tr_ll = Transformer.from_crs(f"EPSG:{g['epsg']}", "EPSG:4326", always_xy=True)
     feats = []
     for s in sorted(segs, key=lambda s: -len(s["xs"])):
@@ -223,6 +249,9 @@ def main() -> None:
         if not poly_buf.contains(Point(lon_c, lat_c)):
             continue
         az = azim(xs, ys)
+        if es_costura(xs, ys, az):
+            print(f"  descartado por costura de empalme: {seg:.1f} km az {az:.0f}°")
+            continue
         gmed = float(np.nanmedian([grad[r, c] for r, c in s["path"]]))
         feats.append({"type": "Feature",
                       "geometry": {"type": "LineString",

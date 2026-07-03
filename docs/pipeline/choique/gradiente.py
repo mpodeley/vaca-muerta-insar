@@ -35,7 +35,8 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 WELLS = DATA / "choique_wells_all.json"
 SEGEMAR = HERE.parent / "calera" / "_data" / "fallas_segemar.geojson"
-# bloque BCLI + margen (idéntico al subset de mintpy_calera.cfg)
+SEAMS = DATA / "burst_seams.geojson"   # costuras de empalme (burst_seams.py)
+# bloque LCA + margen (idéntico al subset de mintpy_calera.cfg)
 LON0, LAT0, LON1, LAT1 = -69.51, -37.84, -69.05, -37.42
 BLOQUE_ID = "BCLI"
 CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
@@ -100,9 +101,17 @@ def main() -> None:
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--src", default=str(HERE / "mintpy_int80"))
     ap.add_argument("--suffix", default="")
-    ap.add_argument("--pctl", type=float, default=97.0)
+    ap.add_argument("--pctl", type=float, default=96.0)
     ap.add_argument("--min-px", type=int, default=10)
     ap.add_argument("--min-elong", type=float, default=3.0)
+    ap.add_argument("--min-km", type=float, default=0.8,
+                    help="largo mínimo del lineamiento [km] (tras encadenar)")
+    ap.add_argument("--gap-km", type=float, default=3.5,
+                    help="encadenar segmentos colineales separados hasta este gap")
+    ap.add_argument("--az-tol", type=float, default=25.0,
+                    help="tolerancia de azimut para encadenar [deg]")
+    ap.add_argument("--buffer-km", type=float, default=2.5,
+                    help="candidatos con centroide a menos de esto del bloque")
     args = ap.parse_args()
 
     v, g = load_velocity(Path(args.src))
@@ -117,7 +126,10 @@ def main() -> None:
     curv[~np.isfinite(vs_c)] = np.nan
 
     thr = np.nanpercentile(grad, args.pctl)
-    binm = closing(np.nan_to_num(grad) >= thr, footprint=np.ones((3, 3)))
+    binm = np.nan_to_num(grad) >= thr
+    binm[:5, :] = binm[-5:, :] = False   # bordes del subset: gradiente espurio
+    binm[:, :5] = binm[:, -5:] = False
+    binm = closing(binm, footprint=np.ones((5, 5)))  # 5x5: une segmentos vecinos del mismo lineamiento
     lab = label(binm, connectivity=2)
     keep = np.zeros_like(binm)
     cands = []
@@ -135,19 +147,116 @@ def main() -> None:
         lons, lats = tr_inv.transform(xs, ys)
         return list(zip(lons, lats)), np.array(xs), np.array(ys)
 
-    feats = []
-    for k, path in enumerate(sorted(skeleton_paths(sk), key=len, reverse=True)):
-        ll, xs, ys = rc2ll(path)
-        seg = np.hypot(np.diff(xs), np.diff(ys)).sum() / 1000.0  # km
-        if seg < 3 * step_m / 1000.0:
-            continue
+    # polígono del bloque (para retener solo candidatos en el bloque + buffer)
+    from shapely.geometry import shape, Point
+    gj_blk = json.load(open(CONC))
+    poly_blk = shape(next(f["geometry"] for f in gj_blk["features"]
+                          if f["properties"].get("id") == BLOQUE_ID))
+    tr_deg = args.buffer_km / 111.0   # buffer aproximado en grados
+    poly_buf = poly_blk.buffer(tr_deg)
+
+    def azim(xs, ys):
         dxy = np.column_stack([xs - xs.mean(), ys - ys.mean()])
         _, _, vt = np.linalg.svd(dxy, full_matrices=False)
-        az = (np.degrees(np.arctan2(vt[0][0], vt[0][1])) + 360) % 180  # azimut geográfico 0-180
-        gmed = float(np.nanmedian([grad[r, c] for r, c in path]))
+        return (np.degrees(np.arctan2(vt[0][0], vt[0][1])) + 360) % 180  # geográfico 0-180
+
+    def az_diff(a, b):
+        d = abs(a - b) % 180
+        return min(d, 180 - d)
+
+    # segmentos crudos en UTM (se descartan migas < 0.25 km)
+    segs = []
+    for path in skeleton_paths(sk):
+        ll, xs, ys = rc2ll(path)
+        L = np.hypot(np.diff(xs), np.diff(ys)).sum() / 1000.0
+        if L < 0.25:
+            continue
+        segs.append(dict(xs=np.asarray(xs), ys=np.asarray(ys), path=list(path)))
+
+    # ENCADENAMIENTO: une segmentos colineales (mismo rumbo ± az-tol) con extremos
+    # a < gap-km — un lineamiento largo suele salir fragmentado del esqueleto
+    def try_merge(a, b):
+        if az_diff(azim(a["xs"], a["ys"]), azim(b["xs"], b["ys"])) > args.az_tol:
+            return None
+        ends_a = [(a["xs"][0], a["ys"][0], 0), (a["xs"][-1], a["ys"][-1], -1)]
+        ends_b = [(b["xs"][0], b["ys"][0], 0), (b["xs"][-1], b["ys"][-1], -1)]
+        best = min(((np.hypot(xa - xb, ya - yb), ia, ib)
+                    for xa, ya, ia in ends_a for xb, yb, ib in ends_b),
+                   key=lambda t: t[0])
+        d, ia, ib = best
+        if d > args.gap_km * 1000:
+            return None
+        # el puente también tiene que ser colineal (no unir paralelas desplazadas)
+        xa, ya, _ = ends_a[0 if ia == 0 else 1]; xb, yb, _ = ends_b[0 if ib == 0 else 1]
+        az_bridge = (np.degrees(np.arctan2(xb - xa, yb - ya)) + 360) % 180
+        if az_diff(az_bridge, azim(a["xs"], a["ys"])) > args.az_tol + 10:
+            return None
+        xs_a = a["xs"] if ia == -1 else a["xs"][::-1]
+        ys_a = a["ys"] if ia == -1 else a["ys"][::-1]
+        xs_b = b["xs"] if ib == 0 else b["xs"][::-1]
+        ys_b = b["ys"] if ib == 0 else b["ys"][::-1]
+        return dict(xs=np.concatenate([xs_a, xs_b]), ys=np.concatenate([ys_a, ys_b]),
+                    path=a["path"] + b["path"])
+
+    merged = True
+    while merged:
+        merged = False
+        for i in range(len(segs)):
+            for j in range(i + 1, len(segs)):
+                m = try_merge(segs[i], segs[j])
+                if m is not None:
+                    segs[i] = m
+                    del segs[j]
+                    merged = True
+                    break
+            if merged:
+                break
+
+    # costuras de empalme del producto multi-burst: un "lineamiento" que corre
+    # SOBRE una costura y con su mismo rumbo es artefacto de mosaico, no geología
+    seam_lines = []
+    if SEAMS.exists():
+        from shapely.geometry import LineString
+        tr_fw2 = Transformer.from_crs("EPSG:4326", f"EPSG:{g['epsg']}", always_xy=True)
+        for f in json.load(open(SEAMS))["features"]:
+            cc = f["geometry"]["coordinates"]
+            xs2, ys2 = tr_fw2.transform([p[0] for p in cc], [p[1] for p in cc])
+            ln = LineString(zip(xs2, ys2))
+            xy = np.array(ln.coords)
+            az_s = (np.degrees(np.arctan2(xy[-1, 0] - xy[0, 0], xy[-1, 1] - xy[0, 1])) + 360) % 180
+            seam_lines.append((ln, az_s))
+        print(f"costuras cargadas: {len(seam_lines)}")
+
+    def es_costura(xs, ys, az):
+        from shapely.geometry import Point as ShPoint
+        for ln, az_s in seam_lines:
+            if az_diff(az, az_s) > 12:
+                continue
+            dmed = np.median([ln.distance(ShPoint(x, y)) for x, y in zip(xs[::3], ys[::3])])
+            if dmed < 2500:   # la costura real cae en el borde del solape (~2 km de la línea media)
+                return True
+        return False
+
+    tr_ll = Transformer.from_crs(f"EPSG:{g['epsg']}", "EPSG:4326", always_xy=True)
+    feats = []
+    for s in sorted(segs, key=lambda s: -len(s["xs"])):
+        xs, ys = s["xs"], s["ys"]
+        seg = np.hypot(np.diff(xs), np.diff(ys)).sum() / 1000.0  # km
+        if seg < args.min_km:
+            continue
+        lons, lats = tr_ll.transform(xs, ys)
+        lon_c, lat_c = float(np.mean(lons)), float(np.mean(lats))
+        if not poly_buf.contains(Point(lon_c, lat_c)):
+            continue
+        az = azim(xs, ys)
+        if es_costura(xs, ys, az):
+            print(f"  descartado por costura de empalme: {seg:.1f} km az {az:.0f}°")
+            continue
+        gmed = float(np.nanmedian([grad[r, c] for r, c in s["path"]]))
         feats.append({"type": "Feature",
                       "geometry": {"type": "LineString",
-                                   "coordinates": [[round(x, 6), round(y, 6)] for x, y in ll]},
+                                   "coordinates": [[round(x, 6), round(y, 6)]
+                                                   for x, y in zip(lons, lats)]},
                       "properties": {"id": len(feats) + 1, "azimut_deg": round(az, 1),
                                      "grad_mmyr_km": round(gmed, 2), "largo_km": round(seg, 2)}})
     out_gj = DATA / f"grad_candidates{args.suffix}.geojson"

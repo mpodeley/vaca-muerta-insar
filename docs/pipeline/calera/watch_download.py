@@ -19,8 +19,10 @@ def main() -> None:
     args = ap.parse_args()
 
     hyp3 = sdk.HyP3()
-    jobs = hyp3.find_jobs(name=f"calera-int{args.tag}")
-    print(f"jobs calera-int{args.tag}: {len(jobs)}")
+    # tags numéricos = ascendente (calera-int40); "d10" = descendente (calera-d10)
+    name = f"calera-{args.tag}" if args.tag.startswith("d") else f"calera-int{args.tag}"
+    jobs = hyp3.find_jobs(name=name)
+    print(f"jobs {name}: {len(jobs)}")
     if not args.no_wait:
         jobs = hyp3.watch(jobs, timeout=36000)      # 10 h margen
     ok = jobs.filter_jobs(succeeded=True, running=False, failed=False, pending=False)
