@@ -18,7 +18,7 @@ _PROJECTS = Path(__file__).resolve().parents[5]  # ~/Projects
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 CAPIV = HERE.parent / "escala_pozo" / "_data" / "capitulo_iv_pozos.csv"
-CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONC = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 AREA = "BAJO DEL CHOIQUE - LA INVERNADA"
 CONC_ID = "BCLI"

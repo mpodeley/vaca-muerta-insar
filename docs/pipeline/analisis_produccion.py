@@ -3,7 +3,7 @@
 
 Para cada concesión (polígono) calcula la velocidad media de deformación dentro
 del área (zonal stats sobre _velocity_wgs84.tif) y la junta con la producción
-acumulada gas/petróleo/agua (estado-del-sistema). Imprime tabla + correlaciones.
+acumulada gas/petróleo/agua (estado-red-gas). Imprime tabla + correlaciones.
 """
 
 from __future__ import annotations
@@ -20,7 +20,7 @@ from rasterio.mask import mask as rio_mask
 _PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 VEL = HERE / "_velocity_wgs84.tif"
-DATA = _PROJECTS / "activos/estado-del-sistema/public/data"
+DATA = _PROJECTS / "activos/estado-red-gas/public/data"
 GEOJSON = DATA / "concesiones_neuquina.geojson"
 HIST = DATA / "produccion_neuquina_historico.json"
 MIN_PIX = 200  # mínimo de pixels confiables dentro del área para considerarla

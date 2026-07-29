@@ -39,7 +39,7 @@ HTML_OUT = HERE / "demo_subsidencia.html"
 
 _RAW = HERE / "_velocity_raw.tif"
 _MASK = HERE / "_mask.tif"
-CONCESIONES = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONCESIONES = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 
 def _add_concesiones(folium, m) -> None:

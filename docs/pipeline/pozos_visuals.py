@@ -17,7 +17,7 @@ import pandas as pd
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 VEL_TIF = ROOT / "t18_f1050" / "_velocity_wgs84.tif"
-GEO = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+GEO = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 CSV = HERE / "pozos_voidage.csv"
 LON0, LON1, LAT0, LAT1 = -70.6, -68.2, -39.2, -37.3
 

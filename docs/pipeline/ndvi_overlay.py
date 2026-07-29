@@ -35,7 +35,7 @@ VEL_WGS84 = HERE / "_velocity_wgs84.tif"   # velocidad mm/año EPSG:4326 (de 04_
 NDVI_TIF = HERE / "ndvi_median.tif"
 HTML_OUT = HERE / "demo_ndvi.html"
 SCATTER_OUT = HERE / "ndvi_vs_subsidencia.png"
-CONCESIONES = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONCESIONES = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 # Veranos recientes (riego máximo en el hemisferio sur); todos con baseline S2 nuevo
 # (offset −1000 DN), así que la conversión a reflectancia es uniforme.

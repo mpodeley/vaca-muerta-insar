@@ -18,7 +18,7 @@ import pandas as pd
 
 _PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).resolve().parent
-GEO = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+GEO = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 CSV = HERE / "pozos_geomec.csv"
 
 # --- supuestos del horizonte receptor (CONFIGURABLES, representativos de un acuífero/horizonte

@@ -164,7 +164,7 @@ def _write_html(frames, bounds, vmax):
     s, w, n, e = bounds
     cy, cx = (s + n) / 2, (w + e) / 2
     data = json.dumps(frames)
-    conc_path = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+    conc_path = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
     conc = json.dumps(json.load(open(conc_path))) if conc_path.exists() else "null"
     html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <title>Deformación acumulada — Vaca Muerta</title>

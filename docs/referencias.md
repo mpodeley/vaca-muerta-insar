@@ -69,7 +69,7 @@
 
 - **Producción por área** (gas/petróleo/agua, Capítulo IV) y **polígonos de concesiones** de la cuenca
   Neuquina: datos públicos de la Secretaría de Energía / provincia de Neuquén
-  (`energianeuquen.gob.ar`), vía el proyecto [estado-del-sistema](https://github.com/mpodeley/estado-del-sistema).
+  (`energianeuquen.gob.ar`), vía el proyecto [estado-red-gas](https://github.com/mpodeley/estado-red-gas).
 
 ## Fuentes hídricas y geológicas (Argentina) para cruzar
 

@@ -32,7 +32,7 @@ HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 ASC, DESC = HERE / "mintpy_int40", HERE / "mintpy_d10"
 T0, T1 = "20250803", "20260624"
-CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONC = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 
 def run(cmd):

@@ -24,7 +24,7 @@ _PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 SRC = HERE / "_velocity_wgs84.tif"  # velocidad mm/año, EPSG:4326, enmascarada
 OUT = HERE / "heatmap_subsidencia.png"
-CONCESIONES = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONCESIONES = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 
 def _plot_concesiones(ax) -> None:

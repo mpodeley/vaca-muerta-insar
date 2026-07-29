@@ -41,7 +41,7 @@ SEAMS = DATA / "burst_seams.geojson"   # costuras de empalme (burst_seams.py)
 # bloque LCA + margen (idéntico al subset de mintpy_calera.cfg)
 LON0, LAT0, LON1, LAT1 = -69.51, -37.84, -69.05, -37.42
 BLOQUE_ID = "BCLI"
-CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
+CONC = _PROJECTS / "activos/estado-red-gas/public/data/concesiones_neuquina.geojson"
 
 
 def load_velocity(src: Path):

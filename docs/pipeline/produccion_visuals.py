@@ -13,7 +13,7 @@ import pandas as pd
 _PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 CSV = HERE / "produccion_vs_subsidencia.csv"
-DATA = _PROJECTS / "activos/estado-del-sistema/public/data"
+DATA = _PROJECTS / "activos/estado-red-gas/public/data"
 GEOJSON = DATA / "concesiones_neuquina.geojson"
 BAR = HERE / "produccion_ranking.png"
 MAP = HERE / "demo_produccion.html"
