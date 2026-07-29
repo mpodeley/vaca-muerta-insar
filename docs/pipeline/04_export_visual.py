@@ -27,6 +27,8 @@ import numpy as np
 
 import aoi
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 VELOCITY_H5 = HERE / "velocity.h5"
 MASK_H5 = HERE / "maskTempCoh.h5"
@@ -37,8 +39,7 @@ HTML_OUT = HERE / "demo_subsidencia.html"
 
 _RAW = HERE / "_velocity_raw.tif"
 _MASK = HERE / "_mask.tif"
-CONCESIONES = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
-                   "concesiones_neuquina.geojson")
+CONCESIONES = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 
 
 def _add_concesiones(folium, m) -> None:

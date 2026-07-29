@@ -16,9 +16,11 @@ import pandas as pd
 import rasterio
 from rasterio.mask import mask as rio_mask
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 VEL = HERE / "_velocity_wgs84.tif"
-DATA = Path("/var/home/matias/Projects/estado-del-sistema/public/data")
+DATA = _PROJECTS / "activos/estado-del-sistema/public/data"
 GEOJSON = DATA / "concesiones_neuquina.geojson"
 HIST = DATA / "produccion_neuquina_historico.json"
 MIN_PIX = 200  # mínimo de pixels confiables dentro del área para considerarla

@@ -17,12 +17,14 @@ import h5py
 import numpy as np
 import pandas as pd
 
+
+_PROJECTS = Path(__file__).resolve().parents[5]  # ~/Projects
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parent.parent
 DATA = HERE / "_data"
 TS = HERE / "mintpy_int80" / "timeseries_ERA5_ramp_demErr.h5"
 MASK = HERE / "mintpy_int80" / "maskTempCoh.h5"
-CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
+CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 OUT = HERE / "demo_choique_slider.html"
 MARGIN_PX = 16
 BO, BW, BG = 1.4, 1.03, 0.0035

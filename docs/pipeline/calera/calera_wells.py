@@ -13,10 +13,12 @@ from pathlib import Path
 
 import pandas as pd
 
+
+_PROJECTS = Path(__file__).resolve().parents[5]  # ~/Projects
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 CAPIV = HERE.parent / "escala_pozo" / "_data" / "capitulo_iv_pozos.csv"
-CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
+CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 
 AREA = "LA CALERA"
 CONC_ID = "LCA"

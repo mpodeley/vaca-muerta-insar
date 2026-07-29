@@ -25,6 +25,8 @@ import numpy as np
 
 import aoi
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 TS_FILES = ["timeseries_ERA5_ramp_demErr.h5", "timeseries_ERA5_ramp.h5",
             "timeseries_ramp_demErr.h5", "timeseries_ramp.h5", "timeseries.h5"]
@@ -162,8 +164,7 @@ def _write_html(frames, bounds, vmax):
     s, w, n, e = bounds
     cy, cx = (s + n) / 2, (w + e) / 2
     data = json.dumps(frames)
-    conc_path = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
-                     "concesiones_neuquina.geojson")
+    conc_path = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
     conc = json.dumps(json.load(open(conc_path))) if conc_path.exists() else "null"
     html = f"""<!DOCTYPE html><html lang="es"><head><meta charset="utf-8">
 <title>Deformación acumulada — Vaca Muerta</title>

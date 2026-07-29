@@ -17,9 +17,11 @@ import urllib.request
 from pathlib import Path
 import numpy as np
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 VELW = HERE / "_velocity_wgs84.tif"
-CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
+CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 OUT = HERE / "demo_sismicidad.html"
 SAUZAL = (-38.05, -69.42)
 ANELO = (-38.35, -68.79)

@@ -9,8 +9,10 @@ import h5py
 import rasterio
 from rasterio.features import geometry_mask
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
-DATA = Path("/var/home/matias/Projects/estado-del-sistema/public/data")
+DATA = _PROJECTS / "activos/estado-del-sistema/public/data"
 TS = HERE / "timeseries_ERA5_ramp_demErr.h5"
 VELW = HERE / "_velocity_wgs84.tif"
 

@@ -26,11 +26,13 @@ from matplotlib.colors import TwoSlopeNorm
 from pyproj import Transformer
 from scipy.ndimage import map_coordinates
 
+
+_PROJECTS = Path(__file__).resolve().parents[5]  # ~/Projects
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 ASC, DESC = HERE / "mintpy_int40", HERE / "mintpy_d10"
 T0, T1 = "20250803", "20260624"
-CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
+CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 
 
 def run(cmd):

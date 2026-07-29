@@ -28,13 +28,14 @@ import numpy as np
 
 import aoi
 
+
+_PROJECTS = Path(__file__).resolve().parents[4]  # ~/Projects
 HERE = Path(__file__).parent
 VEL_WGS84 = HERE / "_velocity_wgs84.tif"   # velocidad mm/año EPSG:4326 (de 04_export_visual.py)
 NDVI_TIF = HERE / "ndvi_median.tif"
 HTML_OUT = HERE / "demo_ndvi.html"
 SCATTER_OUT = HERE / "ndvi_vs_subsidencia.png"
-CONCESIONES = Path("/var/home/matias/Projects/estado-del-sistema/public/data/"
-                   "concesiones_neuquina.geojson")
+CONCESIONES = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 
 # Veranos recientes (riego máximo en el hemisferio sur); todos con baseline S2 nuevo
 # (offset −1000 DN), así que la conversión a reflectancia es uniforme.

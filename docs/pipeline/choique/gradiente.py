@@ -31,6 +31,8 @@ from scipy import ndimage
 from skimage.measure import label, regionprops
 from skimage.morphology import closing, skeletonize
 
+
+_PROJECTS = Path(__file__).resolve().parents[5]  # ~/Projects
 HERE = Path(__file__).resolve().parent
 DATA = HERE / "_data"
 WELLS = DATA / "choique_wells_all.json"
@@ -39,7 +41,7 @@ SEAMS = DATA / "burst_seams.geojson"   # costuras de empalme (burst_seams.py)
 # bloque LCA + margen (idéntico al subset de mintpy_calera.cfg)
 LON0, LAT0, LON1, LAT1 = -69.51, -37.84, -69.05, -37.42
 BLOQUE_ID = "BCLI"
-CONC = Path("/var/home/matias/Projects/estado-del-sistema/public/data/concesiones_neuquina.geojson")
+CONC = _PROJECTS / "activos/estado-del-sistema/public/data/concesiones_neuquina.geojson"
 
 
 def load_velocity(src: Path):
