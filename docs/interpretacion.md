@@ -24,9 +24,9 @@ sigue **promedia pixels de ambas firmas** a lo largo de toda el área, no solo e
 
 ## El hallazgo: subsidencia sostenida durante 7 años, no estacional
 
-Promediando la serie temporal sobre **todos los pixels de subsidencia fuerte** (~97.000 pixels con
+Promediando la serie temporal sobre **todos los pixels de subsidencia fuerte** (~97,000 pixels con
 velocidad < −8 mm/año, repartidos por toda el área —valle y bloques productivos—) y comparándola con una
-**zona estable** (~530.000 pixels):
+**zona estable** (~530,000 pixels):
 
 ![Serie temporal 2019–2026: zona subsidente vs estable](assets/point_timeseries.png){ loading=lazy }
 
@@ -59,9 +59,9 @@ Si la subsidencia cayera sobre **parcelas regadas**, esos pixeles tendrían NDVI
 
 ![NDVI de verano vs velocidad de deformación](assets/ndvi_vs_subsidencia.png){ loading=lazy }
 
-El resultado **no apoya la hipótesis de riego** a nivel agregado: sobre **8,8 millones** de pixeles, la
-zona de subsidencia fuerte tiene NDVI mediano **0,11**, *menor* que la zona estable (**0,12**) — ambas
-son estepa árida (las parcelas regadas estarían en NDVI > 0,4). Si acaso, lo subsidente está **menos**
+El resultado **no apoya la hipótesis de riego** a nivel agregado: sobre **8.8 millones** de pixeles, la
+zona de subsidencia fuerte tiene NDVI mediano **0.11**, *menor* que la zona estable (**0.12**) — ambas
+son estepa árida (las parcelas regadas estarían en NDVI > 0.4). Si acaso, lo subsidente está **menos**
 vegetado: lo opuesto a lo que esperaríamos del riego. Esto **refuerza** que el driver dominante es
 **producción / reservorio**, no agua de riego.
 

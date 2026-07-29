@@ -9,7 +9,7 @@ La cuenca Neuquina tiene **sismicidad inducida documentada**. La zona de **Sauza
 noroeste de Añelo) **no registraba sismos antes de ~2015** y desde entonces concentra eventos
 asociados temporalmente al desarrollo no convencional. El mayor evento conocido fue un **ML 4.9 / Mw 5
 el 7 de marzo de 2019**, somero, cerca de Añelo [Brunori 2022]. Estudios recientes estiman que
-**~0.5 % de las operaciones de fractura** se asocian estadísticamente a sismos detectables [Schultz 2024].
+**~0.5% de las operaciones de fractura** se asocian estadísticamente a sismos detectables [Schultz 2024].
 
 ## Mapa: deformación + sismos + concesiones
 

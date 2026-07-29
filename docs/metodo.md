@@ -39,7 +39,7 @@ Ventana **2019–2026** con muestreo **~mensual** (89 fechas) para una serie lar
 
 Se arma una **red SBAS** (*Small BAseline Subset*): cada fecha mensual se conecta con las 2 siguientes.
 Los **175 pares** resultantes se encargan a **HyP3**, que genera los interferogramas gratis en la nube
-de ASF (~10 créditos por par, de 8.000/mes gratuitos). → `02_submit_hyp3.py`.
+de ASF (~10 créditos por par, de 8,000/mes gratuitos). → `02_submit_hyp3.py`.
 
 ## 3. Serie de tiempo con MintPy
 
@@ -59,7 +59,7 @@ serie de tiempo de desplazamiento y una **velocidad media** (mm/año). Pasos cla
 
 ## 4. Máscara de calidad
 
-Se conservan solo los pixels con **coherencia temporal > 0.7** (~**74 %** del área, ~4,9 millones de
+Se conservan solo los pixels con **coherencia temporal > 0.7** (~**74%** del área, ~4.9 millones de
 pixels). El resto —embalses, regadío denso, pads activos— se descarta. La estepa árida/semiárida da
 coherencias altas, lo que confirma que es buen terreno para InSAR.
 

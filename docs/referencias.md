@@ -19,7 +19,7 @@
 - **[Bawden 2001]** Bawden, Thatcher, Stein, Hudnut & Peltzer (2001), *Nature* 412 — Los Ángeles:
   separar deformación antrópica de tectónica; las fallas **compartimentan** el campo de deformación.
   [doi:10.1038/35088576](https://doi.org/10.1038/35088576)
-- **[Staniewicz 2020]** Staniewicz et al. (2020), *GRL* 47 — Sentinel-1 sobre 80.000 km² del **Permian
+- **[Staniewicz 2020]** Staniewicz et al. (2020), *GRL* 47 — Sentinel-1 sobre 80,000 km² del **Permian
   Basin** (análogo no convencional directo): subsidencia por extracción, uplift por inyección y
   **zonas lineales de deformación**. [doi:10.1029/2020GL090151](https://doi.org/10.1029/2020GL090151)
 - **[Pepin 2022]** Pepin & Zebker et al. (2022), *JGR Solid Earth* — Delaware Basin: las zonas lineales
@@ -44,7 +44,7 @@
 ## Sismicidad inducida
 
 - **[Schultz 2024]** Schultz et al. (2024), *Seismica* — "Chasing the ghost of fracking in the Vaca
-  Muerta"; ~0.5 % de operaciones asociadas a sismos. [seismica.library.mcgill.ca](https://seismica.library.mcgill.ca/article/view/1435)
+  Muerta"; ~0.5% de operaciones asociadas a sismos. [seismica.library.mcgill.ca](https://seismica.library.mcgill.ca/article/view/1435)
 - **[Sagripanti 2018]** Sagripanti et al. (2018), *J. South American Earth Sciences* — sismicidad
   intraplaca con red local, eventos cerca de Añelo posiblemente antropogénicos.
 - **Catálogo sísmico:** **ISC** FDSN event service (isc.ac.uk), que agrega los reportes de **INPRES**

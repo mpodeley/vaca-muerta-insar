@@ -14,8 +14,8 @@ El piloto responde la pregunta de viabilidad. Para convertirlo en algo robusto:
 
 ## Confirmar la interpretación
 
-- **Sentinel-2 (NDVI).** ✓ Hecho — la subsidencia fuerte **no** coincide con parcelas regadas (NDVI 0,11
-  vs 0,12 de la zona estable; ver [Interpretación](interpretacion.md)). Descarta el riego superficial.
+- **Sentinel-2 (NDVI).** ✓ Hecho — la subsidencia fuerte **no** coincide con parcelas regadas (NDVI 0.11
+  vs 0.12 de la zona estable; ver [Interpretación](interpretacion.md)). Descarta el riego superficial.
 - **Cruzar con hidrología.** Decisivo pero **bloqueado por disponibilidad de datos**: no hay serie
   piezométrica pública del valle de Añelo (los repositorios abiertos —SNIH/BDHI, AIC, Datos Abiertos
   Neuquén— solo tienen agua de superficie). Requiere **datos institucionales** (DPRH Neuquén / AIC, por

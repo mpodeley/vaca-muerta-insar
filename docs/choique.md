@@ -2,21 +2,21 @@
 
 **Bajo del Choique – La Invernada** (Pluspetrol, ex ExxonMobil) es el bloque de *shale oil* más al
 norte que analizamos — tan al norte que **cae fuera del footprint** del producto InSAR principal del
-sitio: el frame 1050 del track 18 termina en lat ≈ −37,8° y el bloque está justo arriba. Para sumarlo
+sitio: el frame 1050 del track 18 termina en lat ≈ −37.8° y el bloque está justo arriba. Para sumarlo
 hubo que **procesar un stack propio**: 6 bursts del mismo track 18 ascendente (rectángulo IW2/IW3, el
 primer job cross-subswath del proyecto), 228 pares SBAS mensuales 2020–2026 a 80 m, con el mismo flujo
 HyP3 + MintPy + ERA5 del resto del sitio.
 
 ¿Por qué vale la pena? El bloque tiene **41 pozos** con historia en dos tandas bien separadas: el
 piloto de ExxonMobil (2013–2019) y las campañas de Pluspetrol (7 pozos en 2021, 8 en 2025), con
-**2,8 Mm³ de petróleo** y **3,9 Mm³ de agua** acumulados — y **1,2 Mm³ de agua inyectada** en 3
+**2.8 Mm³ de petróleo** y **3.9 Mm³ de agua** acumulados — y **1.2 Mm³ de agua inyectada** en 3
 sumideros. Es decir: un experimento natural con un *antes* (2020) y un *después* (2021+ y 2025+).
 
 ## Velocidad y acumulado
 
 El resultado: subsidencia **focalizada exactamente sobre el racimo de pads** del sureste del bloque,
 con velocidades de hasta **−6 mm/año** y el entorno estepario esencialmente estable (mediana del
-recorte: −0,1 mm/año). Es una señal más joven y más suave que la de Bandurria Sur o La Calera —
+recorte: −0.1 mm/año). Es una señal más joven y más suave que la de Bandurria Sur o La Calera —
 coherente con un bloque cuyo desarrollo masivo recién arranca.
 
 ![Bajo del Choique — velocidad LOS y desplazamiento acumulado](assets/choique_velocity.png){ loading=lazy }
@@ -35,8 +35,8 @@ local**.
 La secuencia es elocuente: hasta 2022 el terreno sobre los pads está neutro; el cuenco aparece con la
 producción de la campaña 2021 y se **profundiza abruptamente en 2025–2026** (hasta ≈ −30 mm relativos),
 cuando entran los 8 pozos nuevos y el voidage del bloque acelera. El panel inferior lo pone en números:
-voidage bruto acumulado **≈ 12,4 Mm³ de reservorio** (petróleo 4,1 + agua 4,0 + gas 4,3) contra
-**1,2 Mm³** inyectados, y la subsidencia mediana sobre los pozos baja de ~0 a **≈ −21 mm**, con el
+voidage bruto acumulado **≈ 12.4 Mm³ de reservorio** (petróleo 4.1 + agua 4.0 + gas 4.3) contra
+**1.2 Mm³** inyectados, y la subsidencia mediana sobre los pozos baja de ~0 a **≈ −21 mm**, con el
 quiebre de pendiente justo en la campaña 2025.
 
 ## Deformación acumulada en el tiempo (slider)

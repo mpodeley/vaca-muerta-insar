@@ -14,13 +14,13 @@ arrastre habilitados.*
 | Métrica | Valor |
 |---|---|
 | Área cubierta | ~210×210 km (lon −70.6 a −68.2, lat −39.2 a −37.3) |
-| Pixels confiables (coherencia > 0.7) | 4.886.991 (~**74 %** del área) |
+| Pixels confiables (coherencia > 0.7) | 4,886,991 (~**74%** del área) |
 | Velocidad mediana | −1.9 mm/año |
 | Percentil 1 / 5 | **−12.0** / −5.3 mm/año |
 | Percentil 95 / 99 | +0.5 / +2.1 mm/año |
-| % con subsidencia < −8 mm/año | 2.0 % (localizado) |
+| % con subsidencia < −8 mm/año | 2.0% (localizado) |
 
-El **74 % de cobertura** confirma que la estepa árida es excelente terreno para InSAR. La señal de
+El **74% de cobertura** confirma que la estepa árida es excelente terreno para InSAR. La señal de
 subsidencia es **localizada** (varias cubetas), no un sesgo global.
 
 ## Deformación acumulada en el tiempo (slider)

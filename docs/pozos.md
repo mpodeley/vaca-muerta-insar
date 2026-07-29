@@ -45,7 +45,7 @@ El **campo de extracción de líquido del Vaca Muerta** (centro) reproduce los b
 ρ≈−0.25 a **ρ≈−0.45**.
 
 !!! note "Por qué el voidage volumétrico *no* alcanza"
-    El **agua de fractura** inyectada (Adjunto IV) es del orden del **86 % del voidage de petróleo** en
+    El **agua de fractura** inyectada (Adjunto IV) es del orden del **86% del voidage de petróleo** en
     volumen de reservorio, y la mayoría **no vuelve como flowback**. Si se la suma al balance, el voidage
     volumétrico neto **casi se cancela**… y sin embargo los pozos siguen subsidiendo. La lectura física:
     en roca *tight* la subsidencia la gobierna la **depleción de presión de poro** (la extracción baja la

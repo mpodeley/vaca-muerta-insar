@@ -25,7 +25,7 @@ Seis instantáneas entre 2019 y 2026. En cada panel:
 
 !!! note "Por qué importan los pozos solo-boca"
     El dataset público de **trayectorias corta en nov-2023**. Si se omiten esos 105 pozos, en **2025 se
-    pierde el 55 %** de la producción de petróleo del bloque (65 % en 2026): se vería el cuenco de
+    pierde el 55%** de la producción de petróleo del bloque (65% en 2026): se vería el cuenco de
     subsidencia profundizarse **sin pozos encima**. Por eso se incluyen en la boca (menor precisión
     posicional —el pad está en el *heel*, no sobre la rama— pero presencia correcta).
 

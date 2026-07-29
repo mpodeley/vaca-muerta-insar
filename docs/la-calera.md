@@ -14,8 +14,8 @@ producto de 80 m, con **dos lóbulos** que coinciden con los dos racimos de pads
 discontinuidades hace falta más resolución: re-encargamos los interferogramas como **multi-burst a
 40 m** (2020–2026, 228 pares SBAS, mismo flujo que el reproceso de Bandurria Sur) y corrimos MintPy con
 ERA5 y referencia fija. El salto de resolución pagó: a 40 m el mínimo del cuenco llega a **−21 mm/año**
-(el 80 m lo suavizaba a −9), verificado contra el producto scene-wide (correlación 0,89, diferencia
-mediana 1,7 mm/año) y con el *deramp* validado (el centro del cuenco cambia <7 % sin él).
+(el 80 m lo suavizaba a −9), verificado contra el producto scene-wide (correlación 0.89, diferencia
+mediana 1.7 mm/año) y con el *deramp* validado (el centro del cuenco cambia <7% sin él).
 
 ## El campo de velocidad y su gradiente
 
@@ -32,12 +32,12 @@ La **curvatura** (tercer panel) ayuda a clasificar: una **flexura** aparece como
 de un solo signo (la "rodilla" del cuenco); una **falla** produce un **dipolo ±** apretado a ambos
 lados de la cresta de gradiente. Los lineamientos crudos salen **fragmentados** del esqueleto, así que
 el detector **encadena segmentos colineales**: une tramos de rumbo compatible (±25°) cuyo puente
-también es colineal, con gaps de hasta ~3,5 km. La colinealidad es la clave — dos tramos paralelos
+también es colineal, con gaps de hasta ~3.5 km. La colinealidad es la clave — dos tramos paralelos
 pero desplazados lateralmente (en échelon) **no** se unen.
 
 El resultado son **ocho lineamientos**, dominados por una **familia NE (azimuts 36–61°)** que forma un
-verdadero corredor estructural: **L1, de 8,5 km**, recorre el **flanco este del bloque** — justo donde
-termina el campo de pozos —, con un cluster **en échelon** al norte (L2 de 2,3 km + L5 de 1,4 km,
+verdadero corredor estructural: **L1, de 8.5 km**, recorre el **flanco este del bloque** — justo donde
+termina el campo de pozos —, con un cluster **en échelon** al norte (L2 de 2.3 km + L5 de 1.4 km,
 paralelos, desplazados ~1 km) y pares menores (L6, L7). Un dato sugestivo: el corredor NE es
 aproximadamente paralelo al borde oriental del desarrollo, lo que apunta a discontinuidades
 **acopladas a la geometría del frente de compactación**; que además haya segmentos angostos en échelon
@@ -45,8 +45,8 @@ es el patrón que se espera si esa flexión está **reactivando planos preexiste
 
 !!! note "El detector, validado antes de usarlo"
     Antes de creerle al método lo probamos contra sintéticos con **ruido real** de una zona quieta de
-    la escena (σ = 0,57 mm/año): en ventanas de 4 km recupera la posición del escalón a ±1,5 píxeles y
-    su amplitud con 9 % de error, y **rechaza el caso nulo** (sin escalón). En transectas largas el
+    la escena (σ = 0.57 mm/año): en ventanas de 4 km recupera la posición del escalón a ±1.5 píxeles y
+    su amplitud con 9% de error, y **rechaza el caso nulo** (sin escalón). En transectas largas el
     contraste suave-vs-escalón da falsos positivos (el fondo no es cuadrático a esa escala), así que
     los perfiles largos A-A'/B-B' son solo visuales y la clasificación corre únicamente en las
     perpendiculares locales de 4 km.
@@ -54,7 +54,7 @@ es el patrón que se espera si esa flexión está **reactivando planos preexiste
 ## Transectas: ¿escalón o pendiente?
 
 Sobre cada lineamiento trazamos perfiles perpendiculares de 4 km — **tres** por lineamiento cuando
-supera los 2 km (al 25/50/75 % del recorrido), para ver si el escalón **persiste a lo largo del
+supera los 2 km (al 25/50/75% del recorrido), para ver si el escalón **persiste a lo largo del
 rumbo** — y ajustamos dos modelos en competencia: una superficie **suave** (cuadrática) y la misma
 cuadrática **más un escalón** de ancho finito (función error). Si el escalón gana por margen claro
 (ΔBIC > 10) y su salto supera 3 veces el ruido local, lo declaramos discontinuidad. El **ancho** del
@@ -67,11 +67,11 @@ El veredicto, por estructura:
 
 | Estructura | Largo | Azimut | Transectas | Veredicto |
 |---|---|---|---|---|
-| **L1** (flanco este) | **8,5 km** | 39° | +23,6 / −3,0 / +11,2 mm/año, w 500–1200 m | **flexura** que persiste a lo largo del rumbo, más marcada hacia los extremos |
-| **L2** (cluster norte) | 2,3 km | 40° | −1,6 (**w=120 m**) / −3,5 / −3,3 mm/año | flexura con un tramo **clase falla** en su extremo NE |
-| **L5** (en échelon con L2) | 1,4 km | 43° | −7,5 mm/año, w=500 m | flexura |
-| **L6** (centro) | 1,0 km | 111° | −1,1 mm/año, **w=80 m** | **candidata a falla** |
-| L3, L4, L7, L8 | 0,9–4,3 km | 1–150° | ΔBIC 27–308 | flexuras / indef. |
+| **L1** (flanco este) | **8.5 km** | 39° | +23.6 / −3.0 / +11.2 mm/año, w 500–1200 m | **flexura** que persiste a lo largo del rumbo, más marcada hacia los extremos |
+| **L2** (cluster norte) | 2.3 km | 40° | −1.6 (**w=120 m**) / −3.5 / −3.3 mm/año | flexura con un tramo **clase falla** en su extremo NE |
+| **L5** (en échelon con L2) | 1.4 km | 43° | −7.5 mm/año, w=500 m | flexura |
+| **L6** (centro) | 1.0 km | 111° | −1.1 mm/año, **w=80 m** | **candidata a falla** |
+| L3, L4, L7, L8 | 0.9–4.3 km | 1–150° | ΔBIC 27–308 | flexuras / indef. |
 
 La lectura de conjunto: el hundimiento de La Calera **no termina en una rampa suave** — su flanco
 oriental es una flexura continua de escala kilométrica, y dentro del corredor NE hay al menos **dos
@@ -144,7 +144,7 @@ diferencial d(t).
 ## Deformación acumulada en el tiempo (slider)
 
 El mismo slider que en [Bandurria Sur](bandurria-sur.md): el cuenco crece a la par del voidage por
-pozo. En La Calera domina el **gas** (13.000 Mm³ acumulados), así que las elipses de voidage de
+pozo. En La Calera domina el **gas** (13,000 Mm³ acumulados), así que las elipses de voidage de
 reservorio son más chicas que en un bloque de petróleo — y aun así el cuenco es claro.
 
 <iframe src="../assets/demo_calera_slider.html" width="100%" height="600" style="border:1px solid #ccc;border-radius:6px"></iframe>
@@ -168,7 +168,7 @@ convencionales. La lista completa está en [Referencias](referencias.md).
       temporal d(t) es obligatoria antes de llamar "falla" a nada.
     - **Correlación ≠ causalidad:** que un escalón crezca con la producción indica acople, no un
       mecanismo único (compactación diferencial, reactivación, o borde de compartimento).
-    - La cartografía SEGEMAR 1:250.000 no mapea fallas dentro del bloque: los lineamientos InSAR son
+    - La cartografía SEGEMAR 1:250,000 no mapea fallas dentro del bloque: los lineamientos InSAR son
       **hipótesis nuevas**, no confirmación de estructuras conocidas.
 
 *Datos: Sentinel-1 (ESA/ASF), HyP3 multi-burst INT40, MintPy SBAS + ERA5; Capítulo IV (producción,
